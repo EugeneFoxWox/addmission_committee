@@ -9,10 +9,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition />
+            <RowDefinition Height="50"/>
+
+           <RowDefinition />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <ListBox x:Name="employeesList" ItemsSource="{Binding}" Grid.Row="1">
+        <ListBox x:Name="employeesList" ItemsSource="{Binding}" Grid.Row="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -27,18 +29,36 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" >
+            <ComboBox ItemsSource="{Binding Surname}" x:Name="_CBFind"
+                      TextBoxBase.TextChanged="OnComboboxTextChanged"
+                      IsTextSearchEnabled="False" IsEditable="True"
+                      VerticalAlignment="Center"
+                      Width="200" Loaded="Find_Loaded"/>
+            <Button Margin="10" Padding="10 0">Поиск</Button>
+            <TextBlock Height="20" Margin="20,0,5,0">Сортировка по:</TextBlock>
+            <ComboBox Name="phonesList" Height="20" Width="100" SelectionChanged="ComboBox_SelectionChanged">
+                <TextBlock>Фамилии ↑</TextBlock>
+                <TextBlock>Фамилии ↓</TextBlock>
+                <TextBlock>Имя ↑</TextBlock>
+                <TextBlock>Имя ↓</TextBlock>
+            </ComboBox>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0"/>
             <Button Content="Изменить" Margin="10" Click="Edit_Click"  Padding="10 0"/>
             <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0"/>
+            <Button Content="Экспорт в JSON" Margin="10" Click="Json_Click"  Padding="10 0"/>
+            <Button Content="Экспорт в Excel" Margin="10" Click="Delete_Click"  Padding="10 0"/>
         </StackPanel>
+        
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
             <Button Margin="10" Padding="5" Background="Transparent">Отдел кадров</Button>
             <Button Margin="10" Padding="5" Background="Transparent">Отдела производства</Button>
             <Button Margin="10" Padding="5" Background="Transparent">Отдела планирования</Button>
             <Button Margin="10" Padding="5" Background="Transparent">Бухгалтерия</Button>
-            
-            
         </StackPanel>
     </Grid>
 </Window>
