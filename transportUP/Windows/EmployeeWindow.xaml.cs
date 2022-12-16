@@ -32,12 +32,14 @@ namespace transportUP.Pages
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            if (Employee.Surname == null
-                || Employee.Name == null
-                || Employee.Patronymic == null
-                || Employee.PhoneNumber == null
-                || Employee.Departament == null
-                || Employee.Identificator == null) { MessageBox.Show("Не все поля заполнены!", "Ошибка"); return; }
+            if (String.IsNullOrEmpty(Employee.Surname) 
+                || String.IsNullOrEmpty(Employee.Name) 
+                || String.IsNullOrEmpty(Employee.Patronymic) 
+                || String.IsNullOrEmpty(Employee.PhoneNumber)
+                || String.IsNullOrEmpty(Employee.Departament)) 
+            { 
+                MessageBox.Show("Не все поля заполнены!", "Ошибка"); return; 
+            }
             DialogResult = true;
         }
     }

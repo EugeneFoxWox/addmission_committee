@@ -46,11 +46,24 @@ namespace transportUP
             
         }
 
+        private void MakeComboboxItems (ObservableCollection<Employee> employees)
+        {
+            findEmployeeCB.Items.Clear();
+            foreach (Employee employee in employees)
+            {
+                if (employee is null) continue;
+                findEmployeeCB.Items.Add(employee.Surname + " " + employee.Name + " " + employee.Patronymic);
+            }
+        }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             db.Database.EnsureCreated();
             db.Employees.Load();
-            DataContext = db.Employees.Local.ToObservableCollection();
+            ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
+            DataContext = employees;
+            MakeComboboxItems(employees);
+            
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -59,9 +72,12 @@ namespace transportUP
             if (EmployeeWindow.ShowDialog() == true)
             {
                 Employee Employee = EmployeeWindow.Employee;
-                db.Employees.Add(Employee);
-                db.SaveChanges();
+                db.Employees.Add(Employee);   
             }
+            db.SaveChanges();
+            ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
+            DataContext = employees;
+            MakeComboboxItems(employees);
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
@@ -95,8 +111,10 @@ namespace transportUP
                     employee.Identificator = EmployeeWindow.Employee.Identificator;
                 }
             }
-            Loaded += MainWindow_Loaded;
             db.SaveChanges();
+            ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
+            DataContext = employees;
+            MakeComboboxItems(employees);
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -105,50 +123,47 @@ namespace transportUP
             if (employee is null) return;
             db.Employees.Remove(employee);
             db.SaveChanges();
+            ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
+            DataContext = employees;
+            MakeComboboxItems(employees);
         }
 
         void OnComboboxTextChanged(object sender, RoutedEventArgs e)
         {
-            //_CBFind.IsDropDownOpen = true;
-            // убрать selection, если dropdown только открылся
-            //var tb = (TextBox)e.OriginalSource;
-            //tb.Select(tb.SelectionStart + tb.SelectionLength, 0);
-            //CollectionView cv = (CollectionView)CollectionViewSource.GetDefaultView(_CBFind.ItemsSource);
-            //cv.Filter = s =>
-            //    ((string)s).IndexOf(_CBFind.Text, StringComparison.CurrentCultureIgnoreCase) >= 0;
+            findEmployeeCB.IsDropDownOpen = true;
+            //убрать selection, если dropdown только открылся
+            var tb = (TextBox)e.OriginalSource;
+            tb.Select(tb.SelectionStart + tb.SelectionLength, 0);
+            CollectionView cv = (CollectionView)CollectionViewSource.GetDefaultView(findEmployeeCB.Items);
+            cv.Filter = s =>
+                ((string)s).IndexOf(findEmployeeCB.Text, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
+            ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
             switch (comboBox.SelectedIndex)
             {
                 case 0:
-                    DataContext = db.Employees.OrderBy(empl => empl.Surname).ToList();
+                    DataContext = new ObservableCollection<Employee>(employees.OrderBy(i => i.Surname));
                     break;
                 case 1:
-                    DataContext = db.Employees.OrderByDescending(empl => empl.Surname).ToList();
+                    DataContext = new ObservableCollection<Employee>(employees.OrderByDescending(i => i.Surname));
                     break;
                 case 2:
-                    DataContext = db.Employees.OrderBy(empl => empl.Name).ToList();
+                    DataContext = new ObservableCollection<Employee>(employees.OrderBy(i => i.Name));
                     break;
                 case 3:
-                    DataContext = db.Employees.OrderByDescending(empl => empl.Name).ToList();
+                    DataContext = new ObservableCollection<Employee>(employees.OrderByDescending(i => i.Name));
                     break;
             }
-        }
-
-        private void Find_Loaded(object sender, RoutedEventArgs e)
-        {
-            //var employees = db.Employees.Local.ToObservableCollection();
-            //employees.Select(empl => String.Format("{0} {1} {2}", empl.Surname, empl.Name, empl.Patronymic));
-            //_CBFind.DataContext = employees;
-
+            db.SaveChanges();
         }
 
         async private void Json_Click(object sender, RoutedEventArgs e)
         {
-            db.Employees.Load();
+            db.Employees.ToList();
             ObservableCollection<Employee> _data = (db.Employees.Local.ToObservableCollection());
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
@@ -157,14 +172,20 @@ namespace transportUP
             try
             {
                 string json = JsonSerializer.Serialize(_data, options);
-                await using FileStream createStream = File.Create(@"C:\path.json");
+                await using FileStream createStream = File.Create(@".\Reports\employees.json");
                 await JsonSerializer.SerializeAsync(createStream, _data);
-                MessageBox.Show(@"Создался файл: C:\\path.json");
+                MessageBox.Show(@"Создался файл: employees.json");
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void Find_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }

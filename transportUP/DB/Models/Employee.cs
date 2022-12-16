@@ -11,7 +11,7 @@ namespace transportUP.DB
     public class Employee : INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public int? Identificator { get; set; }
+        public string? Identificator { get; set; }
 
         string? name;
         string? surname;
