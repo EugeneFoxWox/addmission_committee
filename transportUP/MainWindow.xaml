@@ -30,7 +30,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" >
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0" >
             <ComboBox x:Name="findEmployeeCB"
                       TextBoxBase.TextChanged="OnComboboxTextChanged"
                       IsTextSearchEnabled="False" IsEditable="True"
@@ -39,7 +39,7 @@
                       Width="400"/>
             <Button Margin="10" Padding="10 0" Click="Find_Click">Поиск</Button>
             <TextBlock Height="20"><Run Text="Сортировка по:"/></TextBlock>
-            <ComboBox x:Name="phonesList" Height="20" Width="100" SelectionChanged="ComboBox_SelectionChanged" HorizontalAlignment="Right">
+            <ComboBox x:Name="phonesList" Height="20" Width="100" SelectionChanged="ComboBox_SelectionChanged">
                 <TextBlock><Run Text="Фамилии ↑"/></TextBlock>
                 <TextBlock><Run Text="Фамилии ↓"/></TextBlock>
                 <TextBlock><Run Text="Имя ↑"/></TextBlock>
@@ -52,14 +52,9 @@
             <Button Content="Изменить" Margin="10" Click="Edit_Click"  Padding="10 0"/>
             <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0"/>
             <Button Content="Экспорт в JSON" Margin="10" Click="Json_Click"  Padding="10 0"/>
-            <Button Content="Экспорт в Excel" Margin="10" Click="Delete_Click"  Padding="10 0"/>
+            <Button Content="Экспорт в Excel" Margin="10" Click="Excel_Click"  Padding="10 0"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-            <Button Margin="10" Padding="5" Background="Transparent">Отдел кадров</Button>
-            <Button Margin="10" Padding="5" Background="Transparent">Отдела производства</Button>
-            <Button Margin="10" Padding="5" Background="Transparent">Отдела планирования</Button>
-            <Button Margin="10" Padding="5" Background="Transparent">Бухгалтерия</Button>
-        </StackPanel>
+        <Button Grid.Row="0" Margin="10,10,10,10" Padding="5" Background="Transparent">Отдел кадров</Button>
     </Grid>
 </Window>
