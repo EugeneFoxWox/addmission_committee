@@ -16,6 +16,7 @@ namespace transportUP.DB
         string? name;
         string? surname;
         string? patronymic;
+        string? birthday;
         string? phoneNumber;
         string? departament;
  
@@ -34,6 +35,12 @@ namespace transportUP.DB
         {
             get { return patronymic; }
             set { patronymic = value; OnPropertyChanged("Patronymic"); }
+        }
+
+        public string? Birthday
+        {
+            get { return birthday; }
+            set { birthday = value; OnPropertyChanged("Birthday"); }
         }
 
         public string? PhoneNumber

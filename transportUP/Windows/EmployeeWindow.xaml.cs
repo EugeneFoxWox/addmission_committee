@@ -36,7 +36,8 @@ namespace transportUP.Pages
                 || String.IsNullOrEmpty(Employee.Name) 
                 || String.IsNullOrEmpty(Employee.Patronymic) 
                 || String.IsNullOrEmpty(Employee.PhoneNumber)
-                || String.IsNullOrEmpty(Employee.Departament)) 
+                || String.IsNullOrEmpty(Employee.Departament)
+                || String.IsNullOrEmpty(Employee.Birthday))
             { 
                 MessageBox.Show("Не все поля заполнены!", "Ошибка"); return; 
             }

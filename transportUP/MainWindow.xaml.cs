@@ -25,6 +25,7 @@ using System.Text.Encodings.Web;
 using System.Data;
 using OfficeOpenXml;
 using System.Globalization;
+using System.Text.Unicode;
 
 namespace transportUP
 {
@@ -85,7 +86,6 @@ namespace transportUP
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            
             Employee? employee = employeesList.SelectedItem as Employee;
             if (employee is null) return;
 
@@ -94,6 +94,7 @@ namespace transportUP
                 Name = employee.Name,
                 Identificator = employee.Identificator,
                 Surname = employee.Surname,
+                Birthday = employee.Birthday,
                 Patronymic = employee.Patronymic,
                 PhoneNumber = employee.PhoneNumber,
                 Departament = employee.Departament,
@@ -109,6 +110,7 @@ namespace transportUP
                     employee.Surname = EmployeeWindow.Employee.Surname;
                     employee.Name = EmployeeWindow.Employee.Name;
                     employee.Patronymic = EmployeeWindow.Employee.Patronymic;
+                    employee.Birthday = EmployeeWindow.Employee.Birthday;
                     employee.PhoneNumber = EmployeeWindow.Employee.PhoneNumber;
                     employee.Departament = EmployeeWindow.Employee.Departament;
                     employee.Identificator = EmployeeWindow.Employee.Identificator;
@@ -116,7 +118,6 @@ namespace transportUP
             }
             db.SaveChanges();
             ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
-            DataContext = employees;
             MakeComboboxItems(employees);
         }
 
@@ -161,7 +162,7 @@ namespace transportUP
                     DataContext = new ObservableCollection<Employee>(employees.OrderByDescending(i => i.Name));
                     break;
             }
-        }
+        }  
 
         async private void Json_Click(object sender, RoutedEventArgs e)
         {
@@ -169,7 +170,8 @@ namespace transportUP
             ObservableCollection<Employee> _data = (db.Employees.Local.ToObservableCollection());
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                WriteIndented = true
             };
             try
             {
@@ -186,6 +188,34 @@ namespace transportUP
 
         private void Find_Click(object sender, RoutedEventArgs e)
         {
+            string valueFullName = findEmployeeCB.Text;
+            List<Employee> employees = new List<Employee>();
+
+            if (valueFullName.Trim().Equals(""))
+            {
+                DataContext = db.Employees.Local.ToObservableCollection();
+                return;
+            }
+
+            foreach (Employee emp in db.Employees)
+            {
+                string fullName = string.Format("{0} {1} {2}", emp.Surname, emp.Name, emp.Patronymic);
+
+                if (fullName.Equals(valueFullName))
+                {
+                    employees.Add(emp);
+                }
+            }
+
+            if (employees.Count == 0)
+            {
+                MessageBox.Show(string.Format("Не найден ни один работник с ФИО {0} не найден!", valueFullName), "Ошибка!");
+                return;
+            }
+
+            DataContext = employees;
+
+
             
         }
 
@@ -202,18 +232,20 @@ namespace transportUP
                     worksheet.Cells[1, 2].Value = "Name";
                     worksheet.Cells[1, 3].Value = "Surname";
                     worksheet.Cells[1, 4].Value = "Patronymic";
-                    worksheet.Cells[1, 5].Value = "PhoneNumber";
-                    worksheet.Cells[1, 6].Value = "Department";
-                    worksheet.Cells[1, 7].Value = "Identificator";
+                    worksheet.Cells[1, 5].Value = "Birthday";
+                    worksheet.Cells[1, 6].Value = "PhoneNumber";
+                    worksheet.Cells[1, 7].Value = "Department";
+                    worksheet.Cells[1, 8].Value = "Identificator";
                     for (int i = 0; i < employees.Count(); i++)
                     {
                         worksheet.Cells[i + 2, 1].Value = employees[i].Id.ToString();
                         worksheet.Cells[i + 2, 2].Value = employees[i].Name;
                         worksheet.Cells[i + 2, 3].Value = employees[i].Surname;
                         worksheet.Cells[i + 2, 4].Value = employees[i].Patronymic;
-                        worksheet.Cells[i + 2, 5].Value = employees[i].PhoneNumber;
-                        worksheet.Cells[i + 2, 6].Value = employees[i].Departament;
-                        worksheet.Cells[i + 2, 7].Value = employees[i].Identificator;
+                        worksheet.Cells[i + 2, 5].Value = employees[i].Birthday;
+                        worksheet.Cells[i + 2, 6].Value = employees[i].PhoneNumber;
+                        worksheet.Cells[i + 2, 7].Value = employees[i].Departament;
+                        worksheet.Cells[i + 2, 8].Value = employees[i].Identificator;
                     }
                     worksheet.Column(1).AutoFit(5);
                     worksheet.Column(2).AutoFit(5);

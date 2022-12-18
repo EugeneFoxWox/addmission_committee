@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>    
 
             <RowDefinition />
             <RowDefinition Height="50" />
@@ -18,26 +18,35 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Surname}" FontSize="13" Margin="2"/>
-                        <TextBlock Text="{Binding Name}" FontSize="13" Margin="2"/>
-                        <TextBlock Text="{Binding Patronymic}" FontSize="13" Margin="2"/>
-                        <TextBlock Text=", т. " FontSize="13" Margin="2"/>
-                        <TextBlock Text="{Binding PhoneNumber}" FontSize="13" Margin="2"/>
-                        <TextBlock Text=", Отдел:" FontSize="13" Margin="2"/>
-                        <TextBlock Text="{Binding Departament}" FontSize="13" Margin="2"/>
+                        <TextBlock FontSize="14">
+                            <Run FontSize="17" Text="{Binding Surname}"></Run>
+                            <Run FontSize="17" Text="{Binding Name}"></Run>
+                            <Run FontSize="17" Text="{Binding Patronymic}"></Run>
+                            <Run Text="| Телефон:"></Run>
+                            <Run Text="{Binding PhoneNumber}"></Run>
+                            <Run Text="| Отдел:"></Run>
+                            <Run Text="{Binding Departament}"></Run>
+                            <Run Text="| Дата рождения:"></Run>
+                            <Run Text="{Binding Birthday}"></Run>
+                        </TextBlock>
+                        
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0" >
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0" >
             <ComboBox x:Name="findEmployeeCB"
                       TextBoxBase.TextChanged="OnComboboxTextChanged"
                       IsTextSearchEnabled="False" IsEditable="True"
-                      VerticalAlignment="Center"
-                      
-                      Width="400"/>
-            <Button Margin="10" Padding="10 0" Click="Find_Click">Поиск</Button>
+                      VerticalAlignment="Center" 
+                      Width="256"/>
+            <Button Margin="10" 
+                    Padding="10 0" 
+                    Click="Find_Click"
+                    IsDefault = "true">
+                Поиск
+            </Button>
             <TextBlock Height="20"><Run Text="Сортировка по:"/></TextBlock>
             <ComboBox x:Name="phonesList" Height="20" Width="100" SelectionChanged="ComboBox_SelectionChanged">
                 <TextBlock><Run Text="Фамилии ↑"/></TextBlock>
@@ -49,7 +58,7 @@
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0"/>
-            <Button Content="Изменить" Margin="10" Click="Edit_Click"  Padding="10 0"/>
+            <Button Content="Изменить / Подробнее" Margin="10" Click="Edit_Click"  Padding="10 0"/>
             <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0"/>
             <Button Content="Экспорт в JSON" Margin="10" Click="Json_Click"  Padding="10 0"/>
             <Button Content="Экспорт в Excel" Margin="10" Click="Excel_Click"  Padding="10 0"/>

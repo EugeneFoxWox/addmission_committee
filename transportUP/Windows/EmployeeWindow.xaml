@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:transportUP.Pages"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="PersonnelWindow" Height="450" Width="800">
     <Window.Resources>
@@ -20,6 +21,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -50,14 +52,19 @@
                    Grid.Row="3" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-        
-        <TextBlock Text="Телефон" 
+
+        <TextBlock Text="Дата рождения" 
                    Grid.Row="4" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <TextBlock Text="Телефон" 
+                   Grid.Row="5" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
         
         <TextBlock Text="Отдел" 
-                   Grid.Row="5" 
+                   Grid.Row="6" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
  
@@ -65,8 +72,9 @@
         <TextBox Text="{Binding Name}" Grid.Column="1" Grid.Row="1" />
         <TextBox Text="{Binding Surname}" Grid.Column="1" Grid.Row="2" />
         <TextBox Text="{Binding Patronymic}" Grid.Column="1" Grid.Row="3" />
-        <TextBox Text="{Binding PhoneNumber}" Grid.Column="1" Grid.Row="4" />
-        <TextBox Text="{Binding Departament}" Grid.Column="1" Grid.Row="5" />
+        <TextBox Text="{Binding Birthday}" Grid.Column="1" Grid.Row="4" />
+        <TextBox Text="{Binding PhoneNumber}" Grid.Column="1" Grid.Row="5" />
+        <TextBox Text="{Binding Departament}" Grid.Column="1" Grid.Row="6" />
         
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
             <Button IsDefault="True" Click="Accept_Click" >OK</Button>
