@@ -231,7 +231,7 @@ namespace transportUP
 
             if (employees.Count == 0)
             {
-                MessageBox.Show(string.Format("Не найден ни один работник с ФИО - {0} не найден!", value), "Ошибка!");
+                MessageBox.Show(string.Format("Не найден ни один работник по критерию ({0}) не найден!", value), "Ошибка!");
                 return;
             }
 
