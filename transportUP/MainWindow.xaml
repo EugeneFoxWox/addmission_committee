@@ -35,7 +35,19 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,10,0" >
+        <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Margin="10,0,10,0" >
+            <TextBlock VerticalAlignment="Center">Поиск по:</TextBlock>
+            <ComboBox x:Name="categoryFindCB" 
+                      Height="20" Width="100" 
+                      SelectionChanged="categoryFindCB_SelectionChanged" Margin="0,0,20,0">
+                <TextBlock><Run Text="ФИО"/></TextBlock>
+                <TextBlock><Run Text="Телефону"/></TextBlock>
+                <TextBlock><Run Text="Отделу"/></TextBlock>
+            </ComboBox>
             <ComboBox x:Name="findEmployeeCB"
                       TextBoxBase.TextChanged="OnComboboxTextChanged"
                       IsTextSearchEnabled="False" IsEditable="True"
@@ -44,16 +56,16 @@
             <Button Margin="10" 
                     Padding="10 0" 
                     Click="Find_Click"
-                    IsDefault = "true">
-                Поиск
-            </Button>
+                    IsDefault = "true"
+                    Content="Найти"/>
             <TextBlock Height="20"><Run Text="Сортировка по:"/></TextBlock>
-            <ComboBox x:Name="phonesList" Height="20" Width="100" SelectionChanged="ComboBox_SelectionChanged">
+            <ComboBox Height="20" Width="100" SelectionChanged="ComboBox_SelectionChanged">
                 <TextBlock><Run Text="Фамилии ↑"/></TextBlock>
                 <TextBlock><Run Text="Фамилии ↓"/></TextBlock>
                 <TextBlock><Run Text="Имя ↑"/></TextBlock>
                 <TextBlock><Run Text="Имя ↓"/></TextBlock>
             </ComboBox>
+            <Button x:Name="Clear" Content="Сброс" Height="19" Width="49" Margin="20,0,0,0" Click="Clear_Click" />
         </StackPanel>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">

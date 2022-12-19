@@ -40,15 +40,9 @@ namespace transportUP
             InitializeComponent();
             Loaded += MainWindow_Loaded;    
             Title = "Транспорт";
-            employeesList.SelectionChanged += employeesList_SelectionChanged;
         }
 
-        void employeesList_SelectionChanged(object sender, EventArgs e)
-        {
-            Employee? employee = employeesList.SelectedItem as Employee;
-            if (employee is null) return;
-            
-        }
+        private int IndexForFind { get; set; }
 
         private void MakeComboboxItems (ObservableCollection<Employee> employees)
         {
@@ -56,16 +50,30 @@ namespace transportUP
             foreach (Employee employee in employees)
             {
                 if (employee is null) continue;
-                findEmployeeCB.Items.Add(employee.Surname + " " + employee.Name + " " + employee.Patronymic);
+                switch (IndexForFind)
+                {
+                    case 0:
+                        findEmployeeCB.Items.Add(employee.Surname + " " + employee.Name + " " + employee.Patronymic);
+                        break;
+                    case 1:
+                        findEmployeeCB.Items.Add(employee.PhoneNumber);
+                        break;
+                    case 2:
+                        if (findEmployeeCB.Items.Contains(employee.Departament)) break;
+                        findEmployeeCB.Items.Add(employee.Departament);
+                        break;
+                }
             }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+
             db.Database.EnsureCreated();
             db.Employees.Load();
             ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
             DataContext = employees;
+            categoryFindCB.SelectedIndex = 0;
             MakeComboboxItems(employees);
             
         }
@@ -147,26 +155,26 @@ namespace transportUP
         {
             ComboBox comboBox = (ComboBox)sender;
             ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
+            ObservableCollection<Employee> context = (ObservableCollection<Employee>)this.DataContext;
             switch (comboBox.SelectedIndex)
             {
                 case 0:
-                    DataContext = new ObservableCollection<Employee>(employees.OrderBy(i => i.Surname));
+                    DataContext = new ObservableCollection<Employee>(context.OrderBy(i => i.Surname));
                     break;
                 case 1:
-                    DataContext = new ObservableCollection<Employee>(employees.OrderByDescending(i => i.Surname));
+                    DataContext = new ObservableCollection<Employee>(context.OrderByDescending(i => i.Surname));
                     break;
                 case 2:
-                    DataContext = new ObservableCollection<Employee>(employees.OrderBy(i => i.Name));
+                    DataContext = new ObservableCollection<Employee>(context.OrderBy(i => i.Name));
                     break;
                 case 3:
-                    DataContext = new ObservableCollection<Employee>(employees.OrderByDescending(i => i.Name));
+                    DataContext = new ObservableCollection<Employee>(context.OrderByDescending(i => i.Name));
                     break;
             }
         }  
 
         async private void Json_Click(object sender, RoutedEventArgs e)
         {
-            db.Employees.ToList();
             ObservableCollection<Employee> _data = (db.Employees.Local.ToObservableCollection());
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
@@ -188,10 +196,12 @@ namespace transportUP
 
         private void Find_Click(object sender, RoutedEventArgs e)
         {
-            string valueFullName = findEmployeeCB.Text;
-            List<Employee> employees = new List<Employee>();
+            string value = findEmployeeCB.Text;
+            ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
 
-            if (valueFullName.Trim().Equals(""))
+            
+
+            if (value.Trim().Equals(""))
             {
                 DataContext = db.Employees.Local.ToObservableCollection();
                 return;
@@ -200,8 +210,20 @@ namespace transportUP
             foreach (Employee emp in db.Employees)
             {
                 string fullName = string.Format("{0} {1} {2}", emp.Surname, emp.Name, emp.Patronymic);
+                string phoneNumber = emp.PhoneNumber;
+                string department = emp.Departament;
 
-                if (fullName.Equals(valueFullName))
+                if (IndexForFind == 0 && fullName.Equals(value))
+                {
+                    employees.Add(emp);
+                }
+
+                if (IndexForFind == 1 && !string.IsNullOrEmpty(phoneNumber) && phoneNumber.Equals(value))
+                {
+                    employees.Add(emp);
+                }
+
+                if (IndexForFind == 2 && !string.IsNullOrEmpty(department) && department.Equals(value))
                 {
                     employees.Add(emp);
                 }
@@ -209,7 +231,7 @@ namespace transportUP
 
             if (employees.Count == 0)
             {
-                MessageBox.Show(string.Format("Не найден ни один работник с ФИО {0} не найден!", valueFullName), "Ошибка!");
+                MessageBox.Show(string.Format("Не найден ни один работник с ФИО - {0} не найден!", value), "Ошибка!");
                 return;
             }
 
@@ -221,7 +243,7 @@ namespace transportUP
 
         private void Excel_Click(object sender, RoutedEventArgs e)
         {
-            List<Employee> employees = db.Employees.Local.ToList();
+            ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             string fileString = "employees " + DateTime.UtcNow.ToString("yyyy-MM-dd HH-mm-ss") + ".xlsx";
             FileInfo newFile = new FileInfo(@".\..\..\..\Reports\Excel\" + fileString);
@@ -258,6 +280,32 @@ namespace transportUP
                 }
                 MessageBox.Show("Создался файл " + fileString);
             
+        }
+
+        private void categoryFindCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            ObservableCollection<Employee> employees = db.Employees.Local.ToObservableCollection();
+            switch (comboBox.SelectedIndex)
+            {
+                case 0:
+                    IndexForFind = 0;
+                    MakeComboboxItems(employees);
+                    break;
+                case 1:
+                    IndexForFind = 1;
+                    MakeComboboxItems(employees);
+                    break;
+                case 2:
+                    IndexForFind = 2;
+                    MakeComboboxItems(employees);
+                    break;
+            }
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = db.Employees.Local.ToObservableCollection();
         }
     }
 }
