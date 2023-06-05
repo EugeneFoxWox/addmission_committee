@@ -21,23 +21,23 @@ namespace transportUP.Pages
     public partial class EmployeeWindow : Window
     {
 
-        public Employee Employee { get; private set; }
-        public EmployeeWindow(Employee employee)
+        public Entrant Entrant { get; private set; }
+        public EmployeeWindow(Entrant employee)
         {
             InitializeComponent();
-            Employee = employee;
-            DataContext = Employee;
+            Entrant = employee;
+            DataContext = Entrant;
             Title = "Работник";
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(Employee.Surname) 
-                || String.IsNullOrEmpty(Employee.Name) 
-                || String.IsNullOrEmpty(Employee.Patronymic) 
-                || String.IsNullOrEmpty(Employee.PhoneNumber)
-                || String.IsNullOrEmpty(Employee.Departament)
-                || String.IsNullOrEmpty(Employee.Birthday))
+            if (String.IsNullOrEmpty(Entrant.Surname) 
+                || String.IsNullOrEmpty(Entrant.Name) 
+                || String.IsNullOrEmpty(Entrant.Patronymic) 
+                || String.IsNullOrEmpty(Entrant.PhoneNumber)
+                || String.IsNullOrEmpty(Entrant.Departament)
+                || String.IsNullOrEmpty(Entrant.Birthday))
             { 
                 MessageBox.Show("Не все поля заполнены!", "Ошибка"); return; 
             }
