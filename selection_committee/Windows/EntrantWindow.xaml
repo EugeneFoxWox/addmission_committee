@@ -18,7 +18,7 @@
             <Setter Property="Margin" Value="8" />
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#FFCAE5F0">
         <Grid.RowDefinitions>
             <RowDefinition Height="13*" />
             <RowDefinition Height="13*" />
@@ -88,7 +88,8 @@
                     Orientation="Horizontal" 
                     Grid.Row="11" 
                     Grid.Column="2">
-            <Button IsDefault="True" Click="Accept_Click" Cursor="Hand" Background="#FF4792D4" >И так сойдет</Button>
+            <Button IsDefault="True" Click="Accept_Click" Cursor="Hand" Background="#FF4B8FCB" BorderBrush="Black" Foreground="Black" >И так сойдет
+            </Button>
             <Button IsCancel="True" Cursor="Hand" >Отмена</Button>
         </StackPanel>
         <TextBlock Text="СНИЛС"
