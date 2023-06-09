@@ -28,6 +28,7 @@ namespace selection_committee.Windows
             InitializeComponent();
             Entrant = entrant;
             DataContext = Entrant;
+   
             Title = "Работник";
         }
 
@@ -42,6 +43,7 @@ namespace selection_committee.Windows
             { 
                 MessageBox.Show("Не все поля заполнены!", "Ошибка"); return; 
             }
+            
 
             DialogResult = true;
         }
