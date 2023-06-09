@@ -39,9 +39,9 @@
         
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0"/>
-            <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0"/>
-            <Button Content="Изменить / Подробнее" Margin="10" Click="Edit_Click"  Padding="10 0"/>
+            <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
+            <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0" Cursor="Hand" Background="#FFEE6F6F"/>
+            <Button Content="Изменить / Подробнее" Margin="10" Click="Edit_Click"  Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
             <!--<Button Content="Экспорт в JSON" Margin="10" Click="Json_Click"  Padding="10 0"/>
             <Button Content="Экспорт в Excel" Margin="10" Click="Excel_Click"  Padding="10 0"/>-->
         </StackPanel>

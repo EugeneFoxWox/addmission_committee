@@ -70,7 +70,7 @@ namespace selection_committee.Windows
         private void Scan_Click(object sender, RoutedEventArgs e)
         {
             byte[]? file = LoadFile();
-            MessageBox.Show(file?.ToString(), "hello");
+            MessageBox.Show(file?.ToString(), "Файл не загружен");
         }
     }
 }
