@@ -28,8 +28,14 @@ namespace selection_committee.Windows
             InitializeComponent();
             Entrant = entrant;
             DataContext = Entrant;
-   
-            Title = "Работник";
+            if (Entrant.Gender == "Мужской")
+            {
+                genderComboBox.SelectedIndex = 0;
+            }
+            else if (Entrant.Gender == "Женский")
+            {
+                genderComboBox.SelectedIndex = 1;
+            }
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)

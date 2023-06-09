@@ -5,7 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:selection_committee.Windows"
         mc:Ignorable="d"
-        Title="EntrantWindow" Height="450" Width="800">
+        Title="Абитуриент" Height="450" Width="800" Icon="/Windows/иконамоя.ico">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="8" />
@@ -93,7 +93,7 @@
         <TextBlock Text="СНИЛС"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" Grid.Column="4" Height="16" Width="46"/>
-        <TextBox Text="{Binding Patronymic}" 
+        <TextBox Text="{Binding Snils}" 
                  Grid.Column="4" 
                  VerticalAlignment="Top" 
                  HorizontalAlignment="Center"
@@ -110,15 +110,15 @@
         <TextBlock Text="Возраст" 
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top" Grid.Column="1" Margin="56,5,0,0" Height="16" Width="44" Grid.Row="2"/>
-        <Label Grid.Column="1" Content="Тут будет возраст" 
+        <Label Grid.Column="1" Content="{Binding Age}" 
                HorizontalAlignment="Center" 
                VerticalAlignment="Top" 
                Height="27"
                Grid.Row="3"
                Margin="0,8,0,0" />
-        <TextBlock Text="Гражданство"
+        <TextBlock Text="Гражданство (¬‿¬)❤"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top" Height="16" Width="86" Grid.Row="2" Margin="50,5,0,0" Grid.Column="2"/>
+                    VerticalAlignment="Top" Height="16" Width="126" Grid.Row="2" Margin="10,5,0,0" Grid.Column="2"/>
         <ComboBox SelectedItem="{Binding Gender}"
                    Grid.Column="2"
                    VerticalAlignment="Top"
@@ -205,12 +205,31 @@
         <TextBlock Text="Cправка о сиротстве"
         HorizontalAlignment="Center"
         VerticalAlignment="Top" Height="34" Width="116" Grid.Row="5" Margin="0,3,0,0" Grid.Column="3"/>
+        <TextBlock Text="Cпециальность 👨‍🎓"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Top" Height="34" Width="106" Grid.Row="5" Margin="0,3,0,0" Grid.Column="4"/>
         <ComboBox SelectedItem="{Binding Gender}"
             Grid.Column="3"
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             MinWidth="100"
             x:Name="genderComboBox_Copy4"
+            Margin="34,4,0,0"
+            Grid.Row="6">
+            <ComboBoxItem Content="Да"/>
+            <ComboBoxItem Content="Нет"/>
+        </ComboBox>
+        <Button Content="Загрузить скан документа" 
+            Grid.Column="3"
+            Grid.Row="7"
+            Click="Scan_Click" 
+            Margin="4,0,4,0"/>
+        <ComboBox SelectedItem="{Binding Gender}"
+            Grid.Column="4"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            MinWidth="100"
+            x:Name="genderComboBox_Copy5"
             Margin="34,4,0,0"
             Grid.Row="6">
             <ComboBoxItem Content="Да"/>

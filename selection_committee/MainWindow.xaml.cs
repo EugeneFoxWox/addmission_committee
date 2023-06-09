@@ -25,6 +25,7 @@ namespace selection_committee
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         ApplicationContext db = new ApplicationContext();
         public MainWindow()
         {
