@@ -77,6 +77,10 @@ namespace selection_committee
                 Patronymic = entrant.Patronymic,
                 Gender = entrant.Gender,
                 Citizenship = entrant.Citizenship,
+                SNILS = entrant.SNILS,
+                Finished9Or11Grade = entrant.Finished9Or11Grade,
+                AverageScore = entrant.AverageScore,
+                Speciality = entrant.Speciality,
             });
 
             if (EntrantWindow.ShowDialog() == true)
@@ -91,10 +95,13 @@ namespace selection_committee
                     entrant.Surname = EntrantWindow.Entrant.Surname;
                     entrant.Gender = EntrantWindow.Entrant.Gender;
                     entrant.Citizenship = EntrantWindow.Entrant.Citizenship;
+                    entrant.SNILS = EntrantWindow.Entrant.SNILS;
+                    entrant.Finished9Or11Grade = EntrantWindow.Entrant.Finished9Or11Grade;
+                    entrant.AverageScore = EntrantWindow.Entrant.AverageScore;
+                    entrant.Speciality = EntrantWindow.Entrant.Speciality;
                 }
             }
             db.SaveChanges();
-            ObservableCollection<Entrant> entrants = db.Entrants.Local.ToObservableCollection();
         }
     }
 }

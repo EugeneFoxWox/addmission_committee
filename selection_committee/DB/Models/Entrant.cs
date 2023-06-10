@@ -23,11 +23,11 @@ namespace selection_committee.DB.Models
         private string? placeOfResidence;
         private string? city;
         private string? district;
-        private bool? finished9Or11Grade;
+        private string? finished9Or11Grade;
         private string? otherSchoolsAttended;
         private float? averageScore;
         private string? snils;
-        private bool? hasDisabilityCertificate;
+        private string? hasDisabilityCertificate;
         private byte[]? disabilityCertificateScan;
         private bool? hasOrphanageDocuments;
         private byte[]? orphanageDocumentsScan;
@@ -94,7 +94,7 @@ namespace selection_committee.DB.Models
             set { district = value; OnPropertyChanged("District"); }
         }
 
-        public bool? Finished9Or11Grade
+        public string? Finished9Or11Grade
         {
             get { return finished9Or11Grade; }
             set { finished9Or11Grade = value; OnPropertyChanged("Finished9Or11Grade"); }
@@ -118,7 +118,7 @@ namespace selection_committee.DB.Models
             set { snils = value; OnPropertyChanged("SNILS"); }
         }
 
-        public bool? HasDisabilityCertificate
+        public string? HasDisabilityCertificate
         {
             get { return hasDisabilityCertificate; }
             set { hasDisabilityCertificate = value; OnPropertyChanged("HasDisabilityCertificate"); }
