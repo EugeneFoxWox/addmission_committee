@@ -5,7 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:selection_committee.Windows"
         mc:Ignorable="d"
-        Title="Абитуриент" Height="450" Width="800" Icon="/Windows/иконамоя.ico">
+        Title="Абитуриент "  Height="450" Width="800" Icon="/Windows/иконамоя.ico">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="8" />
@@ -245,9 +245,12 @@
             <ComboBoxItem Content="Оригинал"/>
             <ComboBoxItem Content="Копия"/>
         </ComboBox>
-        <TextBlock Text="Правила приема на нашем сайте"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" Height="16" Width="195" Grid.Row="11" Margin="10,10,0,0" Grid.ColumnSpan="2" Cursor="AppStarting" AutomationProperties.HelpText="Переход на наш сайт"/>
+        <TextBlock Grid.ColumnSpan="2" Margin="19,11,105,4" Grid.Row="11">
+          <Hyperlink NavigateUri="http://kptc.ru/" RequestNavigate="HRequestNavigate">
+            Правила приема на нашем сайте
+          </Hyperlink>
+        </TextBlock>
+
         <TextBlock
             HorizontalAlignment="Left"
             VerticalAlignment="Center" Height="16" Width="64" Grid.Row="9" Margin="10,0,0,0" Cursor="" Grid.Column="1"><Run Text="Зачислен"/><Run Language="ru-ru" Text=":"/></TextBlock>
