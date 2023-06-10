@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
+using System.Windows.Navigation;
 
 namespace selection_committee.Windows
 {
@@ -22,6 +24,9 @@ namespace selection_committee.Windows
     /// </summary>
     public partial class EntrantWindow : Window
     {
+
+        public string? TitleAb = "Абитуриент ";
+
         public Entrant Entrant { get; set; }
         public EntrantWindow(Entrant entrant)
         {
@@ -71,6 +76,13 @@ namespace selection_committee.Windows
         {
             byte[]? file = LoadFile();
             MessageBox.Show(file?.ToString(), "Файл не загружен");
+        }
+
+        private void HRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+            
         }
     }
 }
