@@ -28,19 +28,36 @@ namespace selection_committee.Windows
             InitializeComponent();
             Entrant = entrant;
             DataContext = Entrant;
-            if (Entrant.Gender == "Мужской")
+
+            genderComboBox.ItemsSource = genders;
+            genderComboBox.SelectedIndex = genders.IndexOf(entrant.Gender ?? "");
+            
+            citizenshipTextBox.IsEnabled= false;
+            citizenshipComboBox.ItemsSource = citizenship;
+            int citizenshipIndex = citizenship.IndexOf(entrant.Citizenship ?? "");
+            citizenshipComboBox.SelectedIndex = citizenshipIndex == -1 ? 2 : citizenshipIndex;
+
+            if (citizenshipComboBox.SelectedIndex == 2 && entrant.Citizenship != null)
             {
-                genderComboBox.SelectedIndex = 0;
+                 citizenshipTextBox.Text = entrant.Citizenship;
+                citizenshipTextBox.IsEnabled = true;
             }
-            else if (Entrant.Gender == "Женский")
-            {
-                genderComboBox.SelectedIndex = 1;
-            }
+
+
         }
+        private List<string> genders = new List<string>() { "Мужской", "Женский"};   
+        private List<string> citizenship = new List<string>() { "Россия", "Страны СНГ", "Другое"};   
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            Entrant.Gender = genderComboBox.Text;
+            Entrant.Gender = genderComboBox.SelectedItem.ToString();
+            Entrant.Citizenship = citizenshipComboBox.SelectedItem.ToString();
+
+
+            if (citizenshipComboBox.SelectedIndex == 2)
+            {
+                Entrant.Citizenship = citizenshipTextBox.Text;
+            }
 
             if (String.IsNullOrEmpty(Entrant.Surname) 
                 || String.IsNullOrEmpty(Entrant.Name) 
@@ -71,6 +88,14 @@ namespace selection_committee.Windows
         {
             byte[]? file = LoadFile();
             MessageBox.Show(file?.ToString(), "Файл не загружен");
+        }
+
+        private void citizenshipComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (citizenshipComboBox.SelectedIndex == 2)
+                citizenshipTextBox.IsEnabled = true;
+            else
+                citizenshipTextBox.IsEnabled = false;
         }
     }
 }

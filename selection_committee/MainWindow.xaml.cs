@@ -75,7 +75,8 @@ namespace selection_committee
                 Name = entrant.Name,
                 Surname = entrant.Surname,
                 Patronymic = entrant.Patronymic,
-                Gender = entrant.Gender
+                Gender = entrant.Gender,
+                Citizenship = entrant.Citizenship,
             });
 
             if (EntrantWindow.ShowDialog() == true)
@@ -89,6 +90,7 @@ namespace selection_committee
                     entrant.Patronymic = EntrantWindow.Entrant.Patronymic;
                     entrant.Surname = EntrantWindow.Entrant.Surname;
                     entrant.Gender = EntrantWindow.Entrant.Gender;
+                    entrant.Citizenship = EntrantWindow.Entrant.Citizenship;
                 }
             }
             db.SaveChanges();
