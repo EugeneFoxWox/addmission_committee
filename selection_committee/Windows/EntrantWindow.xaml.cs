@@ -28,24 +28,94 @@ namespace selection_committee.Windows
         public string? TitleAb = "Абитуриент ";
 
         public Entrant Entrant { get; set; }
+
+        private List<string> yesNo = new List<string>() { "Да", "Нет"};
+        private List<string> genders = new List<string>() { "Мужской", "Женский" };
+        private List<string> citizenship = new List<string>() { "Россия", "Страны СНГ", "Другое" };
+        private List<string> variants9Or11Years = new List<string>()
+        {
+            "Только 9 классов",
+            "Только 11 классов",
+            "Другое"
+        };
+        private List<string> speciality = new List<string>()
+        {
+            "Архитектура",
+            "Гидрогеология и инженерная геология",
+            "Информационные системы и программирование (на базе 9 классов)",
+            "Строительство и эксплуатация зданий и сооружений (на базе 9 классов)",
+            "Разработка электронных устройств и систем",
+            "Информационные системы и программирование (на базе 11 классов)",
+            "Строительство и эксплуатация зданий и сооружений (на базе 11 классов)"
+        };
         public EntrantWindow(Entrant entrant)
         {
             InitializeComponent();
             Entrant = entrant;
             DataContext = Entrant;
-            if (Entrant.Gender == "Мужской")
+
+            genderComboBox.ItemsSource = genders;
+            genderComboBox.SelectedIndex = genders.IndexOf(entrant.Gender ?? "");
+
+            specialityComboBox.ItemsSource = speciality;
+            specialityComboBox.SelectedIndex = speciality.IndexOf(entrant.Speciality ?? "");
+
+            finishedOnlyTextBox.IsEnabled = false;
+            finishedOnlyComboBox.ItemsSource = variants9Or11Years;
+            int finishedOnlyIndex = variants9Or11Years.IndexOf(entrant.Finished9Or11Grade ?? "");
+            finishedOnlyComboBox.SelectedIndex = finishedOnlyIndex == -1 ? 2 : finishedOnlyIndex;
+
+            if (finishedOnlyComboBox.SelectedIndex == 2 && entrant.Finished9Or11Grade != null)
             {
-                genderComboBox.SelectedIndex = 0;
+                finishedOnlyTextBox.Text = entrant.Finished9Or11Grade;
+                finishedOnlyTextBox.IsEnabled = true;
             }
-            else if (Entrant.Gender == "Женский")
+
+
+            citizenshipTextBox.IsEnabled= false;
+            citizenshipComboBox.ItemsSource = citizenship;
+            int citizenshipIndex = citizenship.IndexOf(entrant.Citizenship ?? "");
+            citizenshipComboBox.SelectedIndex = finishedOnlyIndex == -1 ? 2 : finishedOnlyIndex;
+
+            if (citizenshipComboBox.SelectedIndex == 2 && entrant.Citizenship != null)
             {
-                genderComboBox.SelectedIndex = 1;
+                citizenshipTextBox.Text = entrant.Citizenship;
+                citizenshipTextBox.IsEnabled = true;
             }
+
+            hasDisabilityCertificateComboBox.ItemsSource = yesNo;
+            int hasDisabilityCertificateIndex = yesNo.IndexOf(entrant.HasDisabilityCertificate ?? "");
+            hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1 
+                ? 0
+                : finishedOnlyIndex;
+
+            if (hasDisabilityCertificateComboBox.SelectedIndex == 0 && 
+                entrant.HasDisabilityCertificate != null)
+            {
+                hasDisabilityCertificateButton.IsEnabled = true;
+            }
+
         }
+        
+        
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            Entrant.Gender = genderComboBox.Text;
+            Entrant.Gender = genderComboBox.SelectedItem.ToString();
+            Entrant.Citizenship = citizenshipComboBox.SelectedItem.ToString();
+            Entrant.Finished9Or11Grade = finishedOnlyComboBox.SelectedItem.ToString();
+            Entrant.Speciality = specialityComboBox.SelectedItem.ToString();
+
+
+            if (citizenshipComboBox.SelectedIndex == 2)
+            {
+                Entrant.Citizenship = citizenshipTextBox.Text;
+            }
+
+            if (finishedOnlyComboBox.SelectedIndex == 2)
+            {
+                Entrant.Finished9Or11Grade = finishedOnlyTextBox.Text;
+            }
 
             if (String.IsNullOrEmpty(Entrant.Surname) 
                 || String.IsNullOrEmpty(Entrant.Name) 
@@ -62,7 +132,7 @@ namespace selection_committee.Windows
         private byte[]? LoadFile()
         {
             var dialog = new OpenFileDialog();
-            dialog.Filter = "PDF Files (*.pdf)|*.pdf|All files (*.*)|*.*";
+            dialog.Filter = "Изображения (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg";
             if (dialog.ShowDialog() == true)
             {
                 return File.ReadAllBytes(dialog.FileName);
@@ -78,11 +148,27 @@ namespace selection_committee.Windows
             MessageBox.Show(file?.ToString(), "Файл не загружен");
         }
 
+
+        private void citizenshipComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (citizenshipComboBox.SelectedIndex == 2)
+                citizenshipTextBox.IsEnabled = true;
+            else
+                citizenshipTextBox.IsEnabled = false;
+        }
+
+        private void finishedOnlyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (finishedOnlyComboBox.SelectedIndex == 2)
+                finishedOnlyTextBox.IsEnabled = true;
+            else
+                finishedOnlyTextBox.IsEnabled = false;
+        }
+        
         private void HRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
-            
         }
     }
 }
