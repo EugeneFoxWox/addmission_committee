@@ -29,7 +29,7 @@ namespace selection_committee.DB.Models
         private string? snils;
         private string? hasDisabilityCertificate;
         private byte[]? disabilityCertificateScan;
-        private bool? hasOrphanageDocuments;
+        private string? hasOrphanageDocuments;
         private byte[]? orphanageDocumentsScan;
         private string? speciality;
         private string? admissionRulesLink;
@@ -130,7 +130,7 @@ namespace selection_committee.DB.Models
             set { disabilityCertificateScan = value; OnPropertyChanged("DisabilityCertificateScan"); }
         }
 
-        public bool? HasOrphanageDocuments
+        public string? HasOrphanageDocuments
         {
             get { return hasOrphanageDocuments; }
             set { hasOrphanageDocuments = value; OnPropertyChanged("HasOrphanageDocuments"); }

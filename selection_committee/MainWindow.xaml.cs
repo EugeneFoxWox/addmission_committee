@@ -81,6 +81,7 @@ namespace selection_committee
                 Finished9Or11Grade = entrant.Finished9Or11Grade,
                 AverageScore = entrant.AverageScore,
                 Speciality = entrant.Speciality,
+                DateOfBirth = entrant.DateOfBirth,
             });
 
             if (EntrantWindow.ShowDialog() == true)
@@ -99,6 +100,7 @@ namespace selection_committee
                     entrant.Finished9Or11Grade = EntrantWindow.Entrant.Finished9Or11Grade;
                     entrant.AverageScore = EntrantWindow.Entrant.AverageScore;
                     entrant.Speciality = EntrantWindow.Entrant.Speciality;
+                    entrant.DateOfBirth = EntrantWindow.Entrant.DateOfBirth;
                 }
             }
             db.SaveChanges();

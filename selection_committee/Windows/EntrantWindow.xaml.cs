@@ -89,10 +89,23 @@ namespace selection_committee.Windows
                 ? 0
                 : finishedOnlyIndex;
 
-            if (hasDisabilityCertificateComboBox.SelectedIndex == 0 && 
-                entrant.HasDisabilityCertificate != null)
+            hasDisabilityCertificateButton.IsEnabled = false;
+            if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
             {
                 hasDisabilityCertificateButton.IsEnabled = true;
+            }
+            
+
+            hasOrphanageDocumentsComboBox.ItemsSource = yesNo;
+            int hasOrphanageDocumentsIndex = yesNo.IndexOf(entrant.HasOrphanageDocuments ?? "");
+            hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1 
+                ? 0
+                : finishedOnlyIndex;
+
+            hasOrphanageDocumentsButton.IsEnabled = false;
+            if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
+            {
+                hasOrphanageDocumentsButton.IsEnabled = true;
             }
 
         }
@@ -167,6 +180,37 @@ namespace selection_committee.Windows
         
         private void HRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime birthDate = DatePicker.SelectedDate.Value;
+            TimeSpan age = DateTime.Today - birthDate;
+            int years = (int)(age.TotalDays / 365.25);
+            ageLabel.Content = years.ToString();
+        }
+
+        private void hasDisabilityCertificateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
+                hasDisabilityCertificateButton.IsEnabled = true;
+            else
+                hasDisabilityCertificateButton.IsEnabled = false;
+        }
+
+        private void hasOrphanageDocumentsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (hasOrphanageDocumentsComboBox.SelectedIndex == 0)
+                hasOrphanageDocumentsButton.IsEnabled = true;
+            else
+                hasOrphanageDocumentsButton.IsEnabled = false;
+        }
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            // for .NET Core you need to add UseShellExecute = true
+            // see https://learn.microsoft.com/dotnet/api/system.diagnostics.processstartinfo.useshellexecute#property-value
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }

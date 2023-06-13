@@ -81,7 +81,7 @@
                 Grid.Column="1"
                 Grid.Row="6"
                 Click="Scan_Click" 
-                Margin="4,39,4,39" Grid.RowSpan="4" IsEnabled="False" Cursor="Hand"/>
+                Margin="4,39,4,39" Grid.RowSpan="4"  Cursor="Hand"/>
         <StackPanel HorizontalAlignment="Center" 
                     Orientation="Horizontal" 
                     Grid.Row="11" 
@@ -110,6 +110,7 @@
                VerticalAlignment="Top" 
                Height="27"
                Grid.Row="3"
+               x:Name="ageLabel"
                Margin="0,8,0,0" />
         <TextBlock Text="Гражданство"
                     HorizontalAlignment="Center"
@@ -185,6 +186,7 @@
                     HorizontalAlignment="Center"
                     MinWidth="100"
                     x:Name="hasDisabilityCertificateComboBox"
+                    SelectionChanged="hasDisabilityCertificateComboBox_SelectionChanged"
                     Margin="0,4,0,0"
                     Grid.Row="6">
         </ComboBox>
@@ -195,7 +197,6 @@
                 Margin="4,39,4,39" 
                 Grid.RowSpan="4" 
                 x:Name="hasDisabilityCertificateButton"
-                IsEnabled="False" 
                 Cursor="Hand"/>
         <TextBlock Text="Cправка о сиротстве"
         HorizontalAlignment="Center"
@@ -203,21 +204,22 @@
         <TextBlock Text="Cпециальность 👨‍🎓"
         HorizontalAlignment="Center"
         VerticalAlignment="Center" Height="20" Width="106" Grid.Row="5" Grid.Column="4"/>
-        <ComboBox SelectedItem="{Binding HasOrphanageDocuments}"
+        <ComboBox 
             Grid.Column="3"
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             MinWidth="100"
-            x:Name="genderComboBox_Copy4"
+            x:Name="hasOrphanageDocumentsComboBox"
+            SelectionChanged="hasOrphanageDocumentsComboBox_SelectionChanged"
             Margin="34,4,0,0"
-            Grid.Row="6">
-            <ComboBoxItem Content="Да"/>
-            <ComboBoxItem Content="Нет"/>
-        </ComboBox>
+            Grid.Row="6"/>
+
+
         <Button Content="Загрузить скан документа" 
             Grid.Column="3"
             Grid.Row="6"
             Click="Scan_Click" 
+            x:Name="hasOrphanageDocumentsButton"
             Margin="4,39,4,39" Grid.RowSpan="4" Cursor="Hand"/>
         <ComboBox   Grid.Column="4"
                     VerticalAlignment="Top"
@@ -240,10 +242,10 @@
             <ComboBoxItem Content="Оригинал"/>
             <ComboBoxItem Content="Копия"/>
         </ComboBox>
-        <TextBlock Grid.ColumnSpan="2" Margin="19,11,105,4" Grid.Row="11">
-          <Hyperlink NavigateUri="http://kptc.ru/">
-            Правила приема на нашем сайте
-          </Hyperlink>
+        <TextBlock Grid.ColumnSpan="2" Margin="19,11,105,4" Grid.Row="11" >
+          <Hyperlink NavigateUri="http://www.google.com" RequestNavigate="Hyperlink_RequestNavigate">
+                Click here
+           </Hyperlink>
         </TextBlock>
 
         <TextBlock
@@ -252,6 +254,13 @@
         <TextBlock
             HorizontalAlignment="Left"
             VerticalAlignment="Top" Height="16" Width="111" Grid.Row="10" Margin="10,10,0,0" Cursor="" Grid.Column="1"><Run Text="Год поступления"/><Run Language="ru-ru" Text=":"/></TextBlock>
-        <DatePicker HorizontalAlignment="Left" Margin="19,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="133"/>
+        <DatePicker SelectedDate="{Binding DateOfBirth, Mode=TwoWay}" 
+                    HorizontalAlignment="Left" 
+                    Margin="19,0,0,0"
+                    Grid.Row="3"
+                    x:Name="DatePicker"
+                    VerticalAlignment="Center"
+                    SelectedDateChanged="DatePicker_SelectedDateChanged"
+                    Width="133"/>
     </Grid>
 </Window>
