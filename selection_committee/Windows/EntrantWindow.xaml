@@ -250,7 +250,7 @@
             <ComboBoxItem Content="Копия"/>
         </ComboBox>
         <TextBlock Grid.ColumnSpan="2" Margin="19,11,105,4" Grid.Row="11">
-          <Hyperlink NavigateUri="http://kptc.ru/" RequestNavigate="HRequestNavigate">
+          <Hyperlink NavigateUri="http://kptc.ru/">
             Правила приема на нашем сайте
           </Hyperlink>
         </TextBlock>
@@ -261,5 +261,6 @@
         <TextBlock
             HorizontalAlignment="Left"
             VerticalAlignment="Top" Height="16" Width="111" Grid.Row="10" Margin="10,10,0,0" Cursor="" Grid.Column="1"><Run Text="Год поступления"/><Run Language="ru-ru" Text=":"/></TextBlock>
+        <DatePicker Grid.Column="3" HorizontalAlignment="Left" Margin="146,30,0,0" Grid.Row="9" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="133" Grid.RowSpan="2"/>
     </Grid>
 </Window>

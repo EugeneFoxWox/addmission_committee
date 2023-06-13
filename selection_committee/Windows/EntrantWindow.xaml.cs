@@ -78,11 +78,5 @@ namespace selection_committee.Windows
             MessageBox.Show(file?.ToString(), "Файл не загружен");
         }
 
-        private void HRequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-            
-        }
     }
 }
