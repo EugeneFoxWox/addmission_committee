@@ -262,5 +262,21 @@
                     VerticalAlignment="Center"
                     SelectedDateChanged="DatePicker_SelectedDateChanged"
                     Width="133"/>
+        <ComboBox SelectedItem="{Binding Gender}"
+            Grid.Column="3"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            MinWidth="100"
+            x:Name="subjects_rf"
+            Margin="0,39,0,0"
+            Grid.Row="2" Grid.RowSpan="2" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
+        <ComboBox SelectedItem="{Binding Gender}"
+            Grid.Column="3"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            MinWidth="100"
+            x:Name="kostroma_districts"
+            Margin="0,1,0,0"
+            Grid.Row="4" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
     </Grid>
 </Window>
