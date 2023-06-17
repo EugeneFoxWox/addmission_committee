@@ -20,7 +20,7 @@ namespace selection_committee.DB.Models
         private DateTime? dateOfBirth;
         private int? age;
         private string? citizenship;
-        private string? placeOfResidence;
+        private string? subject;
         private string? city;
         private string? district;
         private string? finished9Or11Grade;
@@ -76,10 +76,10 @@ namespace selection_committee.DB.Models
             set { citizenship = value; OnPropertyChanged("Citizenship"); }
         }
 
-        public string? PlaceOfResidence
+        public string? Subject
         {
-            get { return placeOfResidence; }
-            set { placeOfResidence = value; OnPropertyChanged("PlaceOfResidence"); }
+            get { return subject; }
+            set { subject = value; OnPropertyChanged("Subject"); }
         }
 
         public string? City

@@ -25,8 +25,8 @@
                             <Run FontSize="17" Text="{Binding Patronymic}"></Run>
                             <Run Text="| Пол:"></Run>
                             <Run Text="{Binding Gender}"></Run>
-                            <Run Text="| Снилс:"></Run>
-                            <Run Text="{Binding SNILS}"></Run>
+                            <Run Text="| Субъект:"></Run>
+                            <Run Text="{Binding Subject}"></Run>
                             <Run Text="| Дата рождения:"></Run>
                             <Run Text="{Binding DateOfBirth}"></Run>
                         </TextBlock>

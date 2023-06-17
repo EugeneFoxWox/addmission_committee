@@ -267,16 +267,16 @@
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             MinWidth="100"
-            x:Name="citykos"
+            x:Name="subjectComboBox"
             Margin="0,39,0,0"
             Grid.Row="2" Grid.RowSpan="2"/>
         <ComboBox
             Grid.Column="3"
             VerticalAlignment="Top"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Center"
             MinWidth="100"
             x:Name="kostroma_districtsComboBox"
-            Margin="34,6,0,0"
+            Margin="0,4,0,0"
             Grid.Row="4" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
     </Grid>
 </Window>

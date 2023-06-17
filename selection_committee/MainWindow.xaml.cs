@@ -83,6 +83,7 @@ namespace selection_committee
                 Speciality = entrant.Speciality,
                 District = entrant.District,
                 DateOfBirth = entrant.DateOfBirth,
+                Subject = entrant.Subject,
             });
 
             if (EntrantWindow.ShowDialog() == true)
@@ -103,6 +104,7 @@ namespace selection_committee
                     entrant.Speciality = EntrantWindow.Entrant.Speciality;
                     entrant.District = EntrantWindow.Entrant.District;
                     entrant.DateOfBirth = EntrantWindow.Entrant.DateOfBirth;
+                    entrant.Subject = EntrantWindow.Entrant.Subject;
                 }
             }
             db.SaveChanges();
