@@ -25,10 +25,10 @@
                             <Run FontSize="17" Text="{Binding Patronymic}"></Run>
                             <Run Text="| Пол:"></Run>
                             <Run Text="{Binding Gender}"></Run>
-                            <Run Text="| Отдел:"></Run>
-                            <Run Text="{Binding Departament}"></Run>
+                            <Run Text="| Снилс:"></Run>
+                            <Run Text="{Binding SNILS}"></Run>
                             <Run Text="| Дата рождения:"></Run>
-                            <Run Text="{Binding Birthday}"></Run>
+                            <Run Text="{Binding DateOfBirth}"></Run>
                         </TextBlock>
                         
                     </StackPanel>

@@ -48,6 +48,18 @@ namespace selection_committee.Windows
             "Информационные системы и программирование (на базе 11 классов)",
             "Строительство и эксплуатация зданий и сооружений (на базе 11 классов)"
         };
+
+        private List<string> district = new List<string>()
+        {
+            "Антроповский район", "Буйский район", "город Буй", "город Волгореченск", "Вохомский район",
+            "Галичский район", "город Галич", "Кадыйский район",
+            "Кологривский округ", "Костромской район", "город Кострома",
+            "Красносельский район", "Макарьевский район", "город Мантурово", "Межевской округ",
+            "Нейский округ","Нерехтский район","Октябрьский район", "Островский район",
+            "Павинский район","Парфеньевский округ", "Поназыревский район",
+            "Пыщугский район", "Солигаличский район", "Судиславский район", "Сусанинский район",
+            "Чухломский район", "Шарьинский район", "город Шарья"
+        };
         public EntrantWindow(Entrant entrant)
         {
             InitializeComponent();
@@ -59,6 +71,10 @@ namespace selection_committee.Windows
 
             specialityComboBox.ItemsSource = speciality;
             specialityComboBox.SelectedIndex = speciality.IndexOf(entrant.Speciality ?? "");
+
+            kostroma_districtsComboBox.ItemsSource = district;
+            kostroma_districtsComboBox.SelectedIndex = district.IndexOf(entrant.District ?? "");
+
 
             finishedOnlyTextBox.IsEnabled = false;
             finishedOnlyComboBox.ItemsSource = variants9Or11Years;
@@ -118,6 +134,7 @@ namespace selection_committee.Windows
             Entrant.Citizenship = citizenshipComboBox.SelectedItem.ToString();
             Entrant.Finished9Or11Grade = finishedOnlyComboBox.SelectedItem.ToString();
             Entrant.Speciality = specialityComboBox.SelectedItem.ToString();
+            Entrant.District = kostroma_districtsComboBox.SelectedItem.ToString();
 
 
             if (citizenshipComboBox.SelectedIndex == 2)

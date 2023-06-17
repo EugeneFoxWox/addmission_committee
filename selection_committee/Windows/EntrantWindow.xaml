@@ -115,14 +115,14 @@
         <TextBlock Text="Гражданство"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top" Height="16" Width="74" Grid.Row="2" Margin="0,5,0,0" Grid.Column="2"/>
-        <ComboBox SelectedItem="{Binding Gender}"
+        <ComboBox 
                    Grid.Column="2"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    MinWidth="100"
                    x:Name="citizenshipComboBox"
                    Margin="34,39,0,0"
-                   Grid.Row="2" Grid.RowSpan="2" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
+                   Grid.Row="2" Grid.RowSpan="2"/>
 
 
         <TextBox Grid.Column="2"
@@ -262,21 +262,21 @@
                     VerticalAlignment="Center"
                     SelectedDateChanged="DatePicker_SelectedDateChanged"
                     Width="133"/>
-        <ComboBox SelectedItem="{Binding Gender}"
+        <ComboBox
             Grid.Column="3"
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             MinWidth="100"
-            x:Name="subjects_rf"
+            x:Name="citykos"
             Margin="0,39,0,0"
-            Grid.Row="2" Grid.RowSpan="2" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
-        <ComboBox SelectedItem="{Binding Gender}"
+            Grid.Row="2" Grid.RowSpan="2"/>
+        <ComboBox
             Grid.Column="3"
             VerticalAlignment="Top"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             MinWidth="100"
-            x:Name="kostroma_districts"
-            Margin="0,1,0,0"
+            x:Name="kostroma_districtsComboBox"
+            Margin="34,6,0,0"
             Grid.Row="4" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
     </Grid>
 </Window>
