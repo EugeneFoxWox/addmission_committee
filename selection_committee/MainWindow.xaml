@@ -13,30 +13,49 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Margin="10,10,10,10" Padding="5" Background="Transparent">Приемная комиссия</Button>
-        
-            
-        <ListBox x:Name="entrantsList" ItemsSource="{Binding}" Grid.Row="1">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontSize="14">
-                            <Run FontSize="17" Text="{Binding Surname}"></Run>
-                            <Run FontSize="17" Text="{Binding Name}"></Run>
-                            <Run FontSize="17" Text="{Binding Patronymic}"></Run>
-                            <Run Text="| Пол:"></Run>
-                            <Run Text="{Binding Gender}"></Run>
-                            <Run Text="| Субъект:"></Run>
-                            <Run Text="{Binding Subject}"></Run>
-                            <Run Text="| Дата рождения:"></Run>
-                            <Run Text="{Binding DateOfBirth}"></Run>
-                        </TextBlock>
-                        
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
 
-        
+
+        <DataGrid  x:Name="entrantsList"   
+                   CanUserResizeColumns="False" 
+                   ItemsSource="{Binding}"  
+                   IsReadOnly="True" 
+                   AutoGenerateColumns="False" 
+                   Background="White"
+                   Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Пол" Binding="{Binding Gender}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Гражданство" Binding="{Binding Citizenship}"></DataGridTextColumn>
+                <DataGridTextColumn Header="СНИЛС" Binding="{Binding SNILS}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Окончание классов" Binding="{Binding Finished9Or11Grade}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Средний балл аттестата" Binding="{Binding AverageScore}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Субъект РФ" Binding="{Binding Subject}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Специальность" Binding="{Binding Speciality}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Район" Binding="{Binding District}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Номер аттестата" Binding="{Binding CertificateNumber}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Бюджет/Небюджет" Binding="{Binding StudyBased}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Скан справки об инвалидности">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnViewDisability" Content="View" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Скан сиротства/опеки">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnViewOrphanhood" Content="View" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>

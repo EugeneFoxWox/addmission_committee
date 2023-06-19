@@ -228,27 +228,29 @@ namespace selection_committee.Windows
 
         private void FillEntrantData()
         {
-            Entrant.Gender = genderComboBox.SelectedItem.ToString();
-            Entrant.Citizenship = citizenshipComboBox.SelectedItem.ToString();
-            Entrant.Finished9Or11Grade = finishedOnlyComboBox.SelectedItem.ToString();
-            Entrant.Speciality = specialityComboBox.SelectedItem.ToString();
-            Entrant.District = kostroma_districtsComboBox.SelectedItem.ToString();
-            Entrant.Subject = subjectComboBox.SelectedItem.ToString();
-            Entrant.StudyBased = studyBasedComboBox.SelectedItem.ToString();
+            try
+            {
+                Entrant.Gender = genderComboBox.SelectedItem?.ToString();
+                Entrant.Citizenship = citizenshipComboBox.SelectedItem?.ToString();
+                Entrant.Finished9Or11Grade = finishedOnlyComboBox.SelectedItem?.ToString();
+                Entrant.Speciality = specialityComboBox.SelectedItem?.ToString();
+                Entrant.District = kostroma_districtsComboBox.SelectedItem?.ToString();
+                Entrant.Subject = subjectComboBox.SelectedItem?.ToString();
+                Entrant.StudyBased = studyBasedComboBox.SelectedItem?.ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Не все поля заполнены!", "Ошибка"); return;
+            }
+            
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (!IsValid(Entrant))
-                {
-                    MessageBox.Show("Не все поля заполнены!", "Ошибка");
-                    return;
-                }
                 FillEntrantData();
-
-
+                
                 if (citizenshipComboBox.SelectedIndex == 2)
                 {
                     Entrant.Citizenship = citizenshipTextBox.Text;
@@ -257,6 +259,11 @@ namespace selection_committee.Windows
                 if (finishedOnlyComboBox.SelectedIndex == 2)
                 {
                     Entrant.Finished9Or11Grade = finishedOnlyTextBox.Text;
+                }
+                if (!IsValid(Entrant))
+                {
+                    MessageBox.Show("Не все поля заполнены!", "Ошибка");
+                    return;
                 }
 
                 DialogResult = true;
@@ -351,13 +358,10 @@ namespace selection_committee.Windows
                    !string.IsNullOrEmpty(entrant.Citizenship) &&
                    !string.IsNullOrEmpty(entrant.SNILS) &&
                    !string.IsNullOrEmpty(entrant.Speciality) &&
-                   !string.IsNullOrEmpty(entrant.District) &&
                    !string.IsNullOrEmpty(entrant.Subject) &&
                    !string.IsNullOrEmpty(entrant.CertificateNumber) &&
                    !string.IsNullOrEmpty(entrant.Finished9Or11Grade) &&
-                   (entrant.Gender == "Мужской" || entrant.Gender == "Женский") && // проверяем корректность поля Gender
-                   (entrant.DateOfBirth <= DateTime.Today.AddYears(-16) && entrant.DateOfBirth >= DateTime.Today.AddYears(-100)) && // проверяем корректность даты рождения
-                   (entrant.AverageScore >= 0 && entrant.AverageScore <= 10); // проверяем корректность среднего балла
+                   (entrant.Gender == "Мужской" || entrant.Gender == "Женский");  // проверяем корректность поля Gender
         }
     }
 }
