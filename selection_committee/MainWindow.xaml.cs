@@ -85,6 +85,7 @@ namespace selection_committee
                 DateOfBirth = entrant.DateOfBirth,
                 Subject = entrant.Subject,
                 CertificateNumber = entrant.CertificateNumber,
+                StudyBased = entrant.StudyBased
             });
 
             if (EntrantWindow.ShowDialog() == true)
@@ -107,6 +108,7 @@ namespace selection_committee
                     entrant.DateOfBirth = EntrantWindow.Entrant.DateOfBirth;
                     entrant.Subject = EntrantWindow.Entrant.Subject;
                     entrant.CertificateNumber = EntrantWindow.Entrant.CertificateNumber;
+                    entrant.StudyBased = EntrantWindow.Entrant.StudyBased;
                 }
             }
             db.SaveChanges();

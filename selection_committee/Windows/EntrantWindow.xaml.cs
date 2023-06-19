@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Navigation;
+using System.Reflection;
 
 namespace selection_committee.Windows
 {
@@ -102,6 +103,10 @@ namespace selection_committee.Windows
             "г. Галич","г. Кострома", "г. Мантурово",  "город Шарья", "Кологривский округ",
             "Межевской округ", "Парфеньевский округ"
         };
+        private List<string> studyBasedList = new List<string>() { 
+            "Бюджет", 
+            "На основе договора об оказании плантых услуг" 
+        };
 
         public EntrantWindow(Entrant entrant)
         {
@@ -109,75 +114,119 @@ namespace selection_committee.Windows
             Entrant = entrant;
             DataContext = Entrant;
 
+            FillGenderComboBox();
+            FillStudyBasedComboBox();
+            FillSpecialityComboBox();
+            FillKostromaDistrictsComboBox();
+            FillSubjectComboBox();
+            FillFinishedOnlyComboBox();
+            FillCitizenshipComboBox();
+            FillHasDisabilityCertificateComboBox();
+            SetHasDisabilityCertificateButtonEnabled();
+            FillHasOrphanageDocumentsComboBox();
+            SetHasOrphanageDocumentsButtonEnabled();
+        }
+
+        private void FillGenderComboBox()
+        {
             genderComboBox.ItemsSource = genders;
-            genderComboBox.SelectedIndex = genders.IndexOf(entrant.Gender ?? "");
+            genderComboBox.SelectedIndex = genders.IndexOf(Entrant.Gender ?? "");
+        }
 
+        private void FillStudyBasedComboBox()
+        {
+            studyBasedComboBox.ItemsSource = studyBasedList;
+            studyBasedComboBox.SelectedIndex = studyBasedList.IndexOf(Entrant.StudyBased ?? "");
+        }
+
+        private void FillSpecialityComboBox()
+        {
             specialityComboBox.ItemsSource = speciality;
-            specialityComboBox.SelectedIndex = speciality.IndexOf(entrant.Speciality ?? "");
+            specialityComboBox.SelectedIndex = speciality.IndexOf(Entrant.Speciality ?? "");
+        }
 
+        private void FillKostromaDistrictsComboBox()
+        {
             kostroma_districtsComboBox.ItemsSource = district;
-            if (entrant.District != null && entrant.District.Contains("Костром"))
+            if (Entrant.District != null && Entrant.District.Contains("Костром"))
                 kostroma_districtsComboBox.IsEnabled = true;
-            else kostroma_districtsComboBox.IsEnabled = false;
-            kostroma_districtsComboBox.SelectedIndex = district.IndexOf(entrant.District ?? "");
+            else
+                kostroma_districtsComboBox.IsEnabled = false;
+            kostroma_districtsComboBox.SelectedIndex = district.IndexOf(Entrant.District ?? "");
+        }
 
+        private void FillSubjectComboBox()
+        {
             subjectComboBox.ItemsSource = subject;
-            subjectComboBox.SelectedIndex = subject.IndexOf(entrant.Subject ?? "");
+            subjectComboBox.SelectedIndex = subject.IndexOf(Entrant.Subject ?? "");
+        }
 
-
+        private void FillFinishedOnlyComboBox()
+        {
             finishedOnlyTextBox.IsEnabled = false;
             finishedOnlyComboBox.ItemsSource = variants9Or11Years;
-            int finishedOnlyIndex = variants9Or11Years.IndexOf(entrant.Finished9Or11Grade ?? "");
+            int finishedOnlyIndex = variants9Or11Years.IndexOf(Entrant.Finished9Or11Grade ?? "");
             finishedOnlyComboBox.SelectedIndex = finishedOnlyIndex == -1 ? 2 : finishedOnlyIndex;
 
-            if (finishedOnlyComboBox.SelectedIndex == 2 && entrant.Finished9Or11Grade != null)
+            if (finishedOnlyComboBox.SelectedIndex == 2 && Entrant.Finished9Or11Grade != null)
             {
-                finishedOnlyTextBox.Text = entrant.Finished9Or11Grade;
+                finishedOnlyTextBox.Text = Entrant.Finished9Or11Grade;
                 finishedOnlyTextBox.IsEnabled = true;
             }
+        }
 
-
-            citizenshipTextBox.IsEnabled= false;
+        private void FillCitizenshipComboBox()
+        {
+            citizenshipTextBox.IsEnabled = false;
             citizenshipComboBox.ItemsSource = citizenship;
-            int citizenshipIndex = citizenship.IndexOf(entrant.Citizenship ?? "");
-            citizenshipComboBox.SelectedIndex = finishedOnlyIndex == -1 ? 2 : finishedOnlyIndex;
+            int citizenshipIndex = citizenship.IndexOf(Entrant.Citizenship ?? "");
+            citizenshipComboBox.SelectedIndex = citizenshipIndex == -1 ? 2 : citizenshipIndex;
 
-            if (citizenshipComboBox.SelectedIndex == 2 && entrant.Citizenship != null)
+            if (citizenshipComboBox.SelectedIndex == 2 && Entrant.Citizenship != null)
             {
-                citizenshipTextBox.Text = entrant.Citizenship;
+                citizenshipTextBox.Text = Entrant.Citizenship;
                 citizenshipTextBox.IsEnabled = true;
             }
+        }
 
+        private void FillHasDisabilityCertificateComboBox()
+        {
             hasDisabilityCertificateComboBox.ItemsSource = yesNo;
-            int hasDisabilityCertificateIndex = yesNo.IndexOf(entrant.HasDisabilityCertificate ?? "");
-            hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1 
+            int hasDisabilityCertificateIndex = yesNo.IndexOf(Entrant.HasDisabilityCertificate ?? "");
+            hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1
                 ? 0
-                : finishedOnlyIndex;
+                : hasDisabilityCertificateIndex;
+        }
 
+        private void SetHasDisabilityCertificateButtonEnabled()
+        {
             hasDisabilityCertificateButton.IsEnabled = false;
             if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
             {
                 hasDisabilityCertificateButton.IsEnabled = true;
             }
-            
+        }
 
+        private void FillHasOrphanageDocumentsComboBox()
+        {
             hasOrphanageDocumentsComboBox.ItemsSource = yesNo;
-            int hasOrphanageDocumentsIndex = yesNo.IndexOf(entrant.HasOrphanageDocuments ?? "");
-            hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1 
+            int hasOrphanageDocumentsIndex = yesNo.IndexOf(Entrant.HasOrphanageDocuments ?? "");
+            hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1
                 ? 0
-                : finishedOnlyIndex;
+                : hasOrphanageDocumentsIndex;
+        }
 
+        private void SetHasOrphanageDocumentsButtonEnabled()
+        {
             hasOrphanageDocumentsButton.IsEnabled = false;
             if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
             {
                 hasOrphanageDocumentsButton.IsEnabled = true;
             }
-
         }
-        
-        
 
-        private void Accept_Click(object sender, RoutedEventArgs e)
+
+        private void FillEntrantData()
         {
             Entrant.Gender = genderComboBox.SelectedItem.ToString();
             Entrant.Citizenship = citizenshipComboBox.SelectedItem.ToString();
@@ -185,28 +234,38 @@ namespace selection_committee.Windows
             Entrant.Speciality = specialityComboBox.SelectedItem.ToString();
             Entrant.District = kostroma_districtsComboBox.SelectedItem.ToString();
             Entrant.Subject = subjectComboBox.SelectedItem.ToString();
+            Entrant.StudyBased = studyBasedComboBox.SelectedItem.ToString();
+        }
 
-
-            if (citizenshipComboBox.SelectedIndex == 2)
+        private void Accept_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                Entrant.Citizenship = citizenshipTextBox.Text;
-            }
+                if (!IsValid(Entrant))
+                {
+                    MessageBox.Show("Не все поля заполнены!", "Ошибка");
+                    return;
+                }
+                FillEntrantData();
 
-            if (finishedOnlyComboBox.SelectedIndex == 2)
+
+                if (citizenshipComboBox.SelectedIndex == 2)
+                {
+                    Entrant.Citizenship = citizenshipTextBox.Text;
+                }
+
+                if (finishedOnlyComboBox.SelectedIndex == 2)
+                {
+                    Entrant.Finished9Or11Grade = finishedOnlyTextBox.Text;
+                }
+
+                DialogResult = true;
+            }
+            catch 
             {
-                Entrant.Finished9Or11Grade = finishedOnlyTextBox.Text;
-            }
-
-            if (String.IsNullOrEmpty(Entrant.Surname) 
-                || String.IsNullOrEmpty(Entrant.Name) 
-                || String.IsNullOrEmpty(Entrant.Patronymic)
-                || String.IsNullOrEmpty(Entrant.Gender)) 
-            { 
-                MessageBox.Show("Не все поля заполнены!", "Ошибка"); return; 
+                MessageBox.Show("Не все поля заполнены!", "Ошибка"); return;
             }
             
-
-            DialogResult = true;
         }
 
         private byte[]? LoadFile()
@@ -284,6 +343,21 @@ namespace selection_committee.Windows
             else kostroma_districtsComboBox.IsEnabled = false;
         }
 
-        
+        private bool IsValid(Entrant entrant)
+        {
+            return !string.IsNullOrEmpty(entrant.Name) &&
+                   !string.IsNullOrEmpty(entrant.Surname) &&
+                   !string.IsNullOrEmpty(entrant.Patronymic) &&
+                   !string.IsNullOrEmpty(entrant.Citizenship) &&
+                   !string.IsNullOrEmpty(entrant.SNILS) &&
+                   !string.IsNullOrEmpty(entrant.Speciality) &&
+                   !string.IsNullOrEmpty(entrant.District) &&
+                   !string.IsNullOrEmpty(entrant.Subject) &&
+                   !string.IsNullOrEmpty(entrant.CertificateNumber) &&
+                   !string.IsNullOrEmpty(entrant.Finished9Or11Grade) &&
+                   (entrant.Gender == "Мужской" || entrant.Gender == "Женский") && // проверяем корректность поля Gender
+                   (entrant.DateOfBirth <= DateTime.Today.AddYears(-16) && entrant.DateOfBirth >= DateTime.Today.AddYears(-100)) && // проверяем корректность даты рождения
+                   (entrant.AverageScore >= 0 && entrant.AverageScore <= 10); // проверяем корректность среднего балла
+        }
     }
 }
