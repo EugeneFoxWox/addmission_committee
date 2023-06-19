@@ -84,6 +84,8 @@ namespace selection_committee
                 District = entrant.District,
                 DateOfBirth = entrant.DateOfBirth,
                 Subject = entrant.Subject,
+                CertificateNumber = entrant.CertificateNumber,
+                StudyBased = entrant.StudyBased
             });
 
             if (EntrantWindow.ShowDialog() == true)
@@ -105,6 +107,8 @@ namespace selection_committee
                     entrant.District = EntrantWindow.Entrant.District;
                     entrant.DateOfBirth = EntrantWindow.Entrant.DateOfBirth;
                     entrant.Subject = EntrantWindow.Entrant.Subject;
+                    entrant.CertificateNumber = EntrantWindow.Entrant.CertificateNumber;
+                    entrant.StudyBased = EntrantWindow.Entrant.StudyBased;
                 }
             }
             db.SaveChanges();

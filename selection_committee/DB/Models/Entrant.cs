@@ -33,7 +33,13 @@ namespace selection_committee.DB.Models
         private byte[]? orphanageDocumentsScan;
         private string? speciality;
         private string? admissionRulesLink;
-
+        private string? certificateNumber;
+        private string? studyBased;
+        public string? CertificateNumber
+        {
+            get { return certificateNumber; }
+            set { certificateNumber = value; OnPropertyChanged("CertificateNumber"); }
+        }
         public string? Surname
         {
             get { return surname; }
@@ -152,6 +158,11 @@ namespace selection_committee.DB.Models
         {
             get { return admissionRulesLink; }
             set { admissionRulesLink = value; OnPropertyChanged("AdmissionRulesLink"); }
+        }
+        public string? StudyBased
+        {
+            get { return studyBased; }
+            set { studyBased = value; OnPropertyChanged("StudyBased"); }
         }
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
