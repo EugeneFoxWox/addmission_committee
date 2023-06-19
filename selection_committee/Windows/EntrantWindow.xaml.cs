@@ -88,7 +88,8 @@ namespace selection_committee.Windows
             "Тюменская область","Ульяновская область","Челябинская область",
             "Ярославская область","г. Москва","г. Санкт-Петербург","Еврейская автономная область",
             "Ненецкий автономный округ","Ханты-Мансийский автономный округ - Югра",
-            "Чукотский автономный округ","Ямало-Ненецкий автономный округ"};
+            "Чукотский автономный округ","Ямало-Ненецкий автономный округ"
+        };
         private List<string> district = new List<string>()
         {
             "Антроповский район", "Буйский район", "Вохомский район",
@@ -115,6 +116,9 @@ namespace selection_committee.Windows
             specialityComboBox.SelectedIndex = speciality.IndexOf(entrant.Speciality ?? "");
 
             kostroma_districtsComboBox.ItemsSource = district;
+            if (entrant.District != null && entrant.District.Contains("Костром"))
+                kostroma_districtsComboBox.IsEnabled = true;
+            else kostroma_districtsComboBox.IsEnabled = false;
             kostroma_districtsComboBox.SelectedIndex = district.IndexOf(entrant.District ?? "");
 
             subjectComboBox.ItemsSource = subject;
@@ -270,12 +274,16 @@ namespace selection_committee.Windows
             else
                 hasOrphanageDocumentsButton.IsEnabled = false;
         }
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+
+        private void subjectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // for .NET Core you need to add UseShellExecute = true
-            // see https://learn.microsoft.com/dotnet/api/system.diagnostics.processstartinfo.useshellexecute#property-value
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
+            if (subjectComboBox.SelectedItem == null) return;
+
+            if (subjectComboBox.SelectedItem.ToString().Contains("Костром")) 
+                kostroma_districtsComboBox.IsEnabled = true;
+            else kostroma_districtsComboBox.IsEnabled = false;
         }
+
+        
     }
 }

@@ -33,7 +33,13 @@ namespace selection_committee.DB.Models
         private byte[]? orphanageDocumentsScan;
         private string? speciality;
         private string? admissionRulesLink;
+        private string? certificateNumber;
 
+        public string? CertificateNumber
+        {
+            get { return certificateNumber; }
+            set { certificateNumber = value; OnPropertyChanged("CertificateNumber"); }
+        }
         public string? Surname
         {
             get { return surname; }

@@ -77,11 +77,7 @@
                   VerticalAlignment="Top"
                   x:Name="genderComboBox" Margin="0,39,0,0" Grid.RowSpan="2" >
         </ComboBox>
-        <Button Content="Загрузить скан документа" 
-                Grid.Column="1"
-                Grid.Row="6"
-                Click="Scan_Click" 
-                Margin="4,39,4,39" Grid.RowSpan="4"  Cursor="Hand"/>
+
         <StackPanel HorizontalAlignment="Center" 
                     Orientation="Horizontal" 
                     Grid.Row="11" 
@@ -122,7 +118,7 @@
                    MinWidth="100"
                    x:Name="citizenshipComboBox"
                    Margin="34,39,0,0"
-                   Grid.Row="2" Grid.RowSpan="2"/>
+                   Grid.Row="2" Grid.RowSpan="2" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
 
 
         <TextBox Grid.Column="2"
@@ -165,22 +161,24 @@
                  HorizontalAlignment="Center"
                  MinWidth="100"
                  Grid.Row="6" Margin="0,8,0,0" />
-        <TextBlock Text="Аттестат🎈"
+        <TextBlock Text="Номер аттестат🎈"
         HorizontalAlignment="Left"
-        VerticalAlignment="Center" Height="16" Width="79" Grid.Row="5" Margin="53,0,0,0" Grid.Column="1"/>
-        <ComboBox   Grid.Column="1"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    MinWidth="100"
-                    x:Name="genderComboBox_Copy2"
-                    Margin="32,4,0,0"
-                    Grid.Row="6">
-            <ComboBoxItem Content="Оригинал"/>
-            <ComboBoxItem Content="Копия"/>
-        </ComboBox>
+        VerticalAlignment="Center" Height="20" Width="99" Grid.Row="5" Margin="32,0,0,0" Grid.Column="1"/>
+        <TextBox Text="{Binding CertificateNumber}"
+                 Grid.Column="1"
+                 VerticalAlignment="Top"
+                 HorizontalAlignment="Left"
+                 MinWidth="100"
+                 x:Name="certificateNumberTextBox"
+                 Margin="32,4,0,0"
+                 Grid.Row="6"/>
         <TextBlock Text="Cправка об инвалидности"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center" Height="20" Width="144" Grid.Row="5" Grid.Column="2"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" 
+                   Height="20" 
+                   Width="144" 
+                   Grid.Row="5" 
+                   Grid.Column="2"/>
         <ComboBox   Grid.Column="2"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
@@ -243,7 +241,7 @@
             <ComboBoxItem Content="Копия"/>
         </ComboBox>
         <TextBlock Grid.ColumnSpan="2" Margin="19,11,105,4" Grid.Row="11" >
-          <Hyperlink NavigateUri="http://www.google.com" RequestNavigate="Hyperlink_RequestNavigate">
+          <Hyperlink NavigateUri="http://www.google.com">
                 Click here
            </Hyperlink>
         </TextBlock>
@@ -269,7 +267,7 @@
             MinWidth="100"
             x:Name="subjectComboBox"
             Margin="0,39,0,0"
-            Grid.Row="2" Grid.RowSpan="2"/>
+            Grid.Row="2" Grid.RowSpan="2" SelectionChanged="subjectComboBox_SelectionChanged"/>
         <ComboBox
             Grid.Column="3"
             VerticalAlignment="Top"
@@ -277,6 +275,6 @@
             MinWidth="100"
             x:Name="kostroma_districtsComboBox"
             Margin="0,4,0,0"
-            Grid.Row="4" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
+            Grid.Row="4" />
     </Grid>
 </Window>
