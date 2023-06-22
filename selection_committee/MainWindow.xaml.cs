@@ -123,7 +123,7 @@ namespace selection_committee
             db.SaveChanges();
         }
 
-        private void SaveFile(byte[]? file)
+        private void SaveFile(byte[]? file, string fileName)
         {
             if (file == null)
             {
@@ -134,8 +134,9 @@ namespace selection_committee
 
             // Создать диалог сохранения файла
             Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
-            saveDialog.FileName = "скан.png";
+            saveDialog.FileName = fileName + ".png";
             saveDialog.DefaultExt = ".png";
+            saveDialog.Filter = "Изображения (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg";
 
             bool? result = saveDialog.ShowDialog(); // Отобразить диалог
 
@@ -152,7 +153,7 @@ namespace selection_committee
             Entrant? entrant = entrantsList.SelectedItem as Entrant;
             if (entrant == null) return;
             entrant = db.Entrants.Find(entrant.Id);
-            SaveFile(entrant?.DisabilityCertificateScan);
+            SaveFile(entrant?.DisabilityCertificateScan, "Справка об инвалидности");
         }
 
         private void btnViewOrphanhood_Click(object sender, RoutedEventArgs e)
@@ -160,7 +161,7 @@ namespace selection_committee
             Entrant? entrant = entrantsList.SelectedItem as Entrant;
             if (entrant == null) return;
             entrant = db.Entrants.Find(entrant.Id);
-            SaveFile(entrant?.OrphanageDocumentsScan);
+            SaveFile(entrant?.OrphanageDocumentsScan, "Справка о сиротстве");
         }
     }
 }
