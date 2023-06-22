@@ -35,6 +35,18 @@ namespace selection_committee.DB.Models
         private string? admissionRulesLink;
         private string? certificateNumber;
         private string? studyBased;
+        private string? enlisted;
+        private string? yearOfEnlisted;
+        public string? YearOfEnlisted
+        {
+            get { return yearOfEnlisted; }
+            set { yearOfEnlisted = value; OnPropertyChanged("YearOfEnlisted"); }
+        }
+        public string? Enlisted
+        {
+            get { return enlisted; }
+            set { enlisted = value; OnPropertyChanged("Enlisted"); }
+        }
         public string? CertificateNumber
         {
             get { return certificateNumber; }

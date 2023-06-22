@@ -114,6 +114,21 @@ namespace selection_committee.Windows
             Entrant = entrant;
             DataContext = Entrant;
 
+            if (Entrant.DisabilityCertificateScan != null) 
+                hasDisabilityCertificateButton.Background = 
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            else 
+                hasDisabilityCertificateButton.Background = 
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
+
+            if (Entrant.OrphanageDocumentsScan != null)
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            else
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
+
+            FillEnlistedComboBox();
             FillGenderComboBox();
             FillStudyBasedComboBox();
             FillSpecialityComboBox();
@@ -127,6 +142,11 @@ namespace selection_committee.Windows
             SetHasOrphanageDocumentsButtonEnabled();
         }
 
+        private void FillEnlistedComboBox()
+        {
+            enlistedComboBox.ItemsSource = yesNo;
+            enlistedComboBox.SelectedIndex = yesNo.IndexOf(Entrant.Enlisted ?? "");
+        }
         private void FillGenderComboBox()
         {
             genderComboBox.ItemsSource = genders;
@@ -192,10 +212,11 @@ namespace selection_committee.Windows
         private void FillHasDisabilityCertificateComboBox()
         {
             hasDisabilityCertificateComboBox.ItemsSource = yesNo;
-            int hasDisabilityCertificateIndex = yesNo.IndexOf(Entrant.HasDisabilityCertificate ?? "");
-            hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1
-                ? 0
-                : hasDisabilityCertificateIndex;
+            hasDisabilityCertificateComboBox.SelectedIndex = yesNo.IndexOf(Entrant.HasDisabilityCertificate ?? "");
+            //hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1
+            //    ? 0
+            //    : hasDisabilityCertificateIndex;
+            
         }
 
         private void SetHasDisabilityCertificateButtonEnabled()
@@ -210,16 +231,16 @@ namespace selection_committee.Windows
         private void FillHasOrphanageDocumentsComboBox()
         {
             hasOrphanageDocumentsComboBox.ItemsSource = yesNo;
-            int hasOrphanageDocumentsIndex = yesNo.IndexOf(Entrant.HasOrphanageDocuments ?? "");
-            hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1
-                ? 0
-                : hasOrphanageDocumentsIndex;
+            hasOrphanageDocumentsComboBox.SelectedIndex = yesNo.IndexOf(Entrant.HasOrphanageDocuments ?? "");
+            //hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1
+            //    ? 0
+            //    : hasOrphanageDocumentsIndex;
         }
 
         private void SetHasOrphanageDocumentsButtonEnabled()
         {
             hasOrphanageDocumentsButton.IsEnabled = false;
-            if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
+            if (hasOrphanageDocumentsComboBox.SelectedIndex == 0)
             {
                 hasOrphanageDocumentsButton.IsEnabled = true;
             }
@@ -237,6 +258,9 @@ namespace selection_committee.Windows
                 Entrant.District = kostroma_districtsComboBox.SelectedItem?.ToString();
                 Entrant.Subject = subjectComboBox.SelectedItem?.ToString();
                 Entrant.StudyBased = studyBasedComboBox.SelectedItem?.ToString();
+                Entrant.Enlisted = enlistedComboBox.SelectedItem?.ToString();
+                Entrant.HasDisabilityCertificate = hasDisabilityCertificateComboBox.SelectedItem?.ToString();
+                Entrant.HasOrphanageDocuments = hasOrphanageDocumentsComboBox.SelectedItem?.ToString();
             }
             catch
             {
@@ -250,7 +274,11 @@ namespace selection_committee.Windows
             try
             {
                 FillEntrantData();
-                
+
+                Entrant.YearOfEnlisted = enlistedComboBox.SelectedIndex == 0
+                    ? DateTime.Now.Year.ToString()
+                    : "";
+
                 if (citizenshipComboBox.SelectedIndex == 2)
                 {
                     Entrant.Citizenship = citizenshipTextBox.Text;
@@ -288,12 +316,23 @@ namespace selection_committee.Windows
                 return null;
             }
         }
-        private void Scan_Click(object sender, RoutedEventArgs e)
+        private void disabilityCertificateScan_Click(object sender, RoutedEventArgs e)
         {
-            byte[]? file = LoadFile();
-            MessageBox.Show(file?.ToString(), "Файл не загружен");
+            byte[]? disabilityCertificateScan = LoadFile();
+            if (disabilityCertificateScan != null) 
+                hasDisabilityCertificateButton.Background =
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            Entrant.DisabilityCertificateScan = disabilityCertificateScan;
         }
 
+        private void orphanageDocumentsScan_Click(object sender, RoutedEventArgs e)
+        {
+            byte[]? orphanageDocumentsScan = LoadFile();
+            if (orphanageDocumentsScan_Click != null)
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            Entrant.OrphanageDocumentsScan = orphanageDocumentsScan;
+        }
 
         private void citizenshipComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -323,22 +362,44 @@ namespace selection_committee.Windows
             TimeSpan age = DateTime.Today - birthDate;
             int years = (int)(age.TotalDays / 365.25);
             ageLabel.Content = years.ToString();
+            Entrant.Age = years;
         }
 
         private void hasDisabilityCertificateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
+            {
                 hasDisabilityCertificateButton.IsEnabled = true;
+                Entrant.HasDisabilityCertificate = "Да";
+            }
             else
+            {
+                hasDisabilityCertificateButton.Background =
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
                 hasDisabilityCertificateButton.IsEnabled = false;
+                Entrant.DisabilityCertificateScan = null;
+                Entrant.HasDisabilityCertificate = "Нет";
+            }
+                
         }
 
         private void hasOrphanageDocumentsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (hasOrphanageDocumentsComboBox.SelectedIndex == 0)
+            {
                 hasOrphanageDocumentsButton.IsEnabled = true;
+                Entrant.HasOrphanageDocuments = "Да";
+            }
+                
             else
+            {
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
                 hasOrphanageDocumentsButton.IsEnabled = false;
+                Entrant.OrphanageDocumentsScan = null;
+                Entrant.HasOrphanageDocuments = "Нет";
+            }
+                
         }
 
         private void subjectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -361,7 +422,18 @@ namespace selection_committee.Windows
                    !string.IsNullOrEmpty(entrant.Subject) &&
                    !string.IsNullOrEmpty(entrant.CertificateNumber) &&
                    !string.IsNullOrEmpty(entrant.Finished9Or11Grade) &&
+                   !string.IsNullOrEmpty(entrant.Enlisted) &&
                    (entrant.Gender == "Мужской" || entrant.Gender == "Женский");  // проверяем корректность поля Gender
         }
+
+        private void enlistedComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (enlistedComboBox.SelectedIndex == 0)
+                yearOfEnlistedLabel.Content = DateTime.Now.Year.ToString();
+            else
+                yearOfEnlistedLabel.Content = "";
+            
+        }
+
     }
 }

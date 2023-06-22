@@ -14,7 +14,6 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Margin="10,10,10,10" Padding="5" Background="Transparent">Приемная комиссия</Button>
 
-
         <DataGrid  x:Name="entrantsList"   
                    CanUserResizeColumns="False" 
                    ItemsSource="{Binding}"  
@@ -27,6 +26,8 @@
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Зачислен" Binding="{Binding Enlisted}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Год зачисления" Binding="{Binding YearOfEnlisted}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Пол" Binding="{Binding Gender}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Гражданство" Binding="{Binding Citizenship}"></DataGridTextColumn>
                 <DataGridTextColumn Header="СНИЛС" Binding="{Binding SNILS}"></DataGridTextColumn>
@@ -41,14 +42,14 @@
                 <DataGridTemplateColumn Header="Скан справки об инвалидности">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="btnViewDisability" Content="View" />
+                            <Button Name="btnViewDisability" Content="View" Click="btnViewDisability_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Скан сиротства/опеки">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="btnViewOrphanhood" Content="View" />
+                            <Button Name="btnViewOrphanhood" Content="View" Click="btnViewOrphanhood_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -61,8 +62,8 @@
             <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
             <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0" Cursor="Hand" Background="#FFEE6F6F"/>
             <Button Content="Изменить / Подробнее" Margin="10" Click="Edit_Click"  Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
-            <!--<Button Content="Экспорт в JSON" Margin="10" Click="Json_Click"  Padding="10 0"/>
-            <Button Content="Экспорт в Excel" Margin="10" Click="Excel_Click"  Padding="10 0"/>-->
+            <!--<Button Content="Экспорт в JSON" Margin="10" Click="Json_Click"  Padding="10 0"/>-->
+            <Button Content="Экспорт в Excel" Margin="10" Click="Excel_Click"  Padding="10 0"  Background="#00FF00"/>
         </StackPanel>
 
     </Grid>
