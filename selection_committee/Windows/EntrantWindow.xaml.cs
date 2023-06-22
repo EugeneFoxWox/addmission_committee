@@ -114,6 +114,20 @@ namespace selection_committee.Windows
             Entrant = entrant;
             DataContext = Entrant;
 
+            if (Entrant.DisabilityCertificateScan != null) 
+                hasDisabilityCertificateButton.Background = 
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            else 
+                hasDisabilityCertificateButton.Background = 
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
+
+            if (Entrant.OrphanageDocumentsScan != null)
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            else
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
+
             FillEnlistedComboBox();
             FillGenderComboBox();
             FillStudyBasedComboBox();
@@ -198,10 +212,11 @@ namespace selection_committee.Windows
         private void FillHasDisabilityCertificateComboBox()
         {
             hasDisabilityCertificateComboBox.ItemsSource = yesNo;
-            int hasDisabilityCertificateIndex = yesNo.IndexOf(Entrant.HasDisabilityCertificate ?? "");
-            hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1
-                ? 0
-                : hasDisabilityCertificateIndex;
+            hasDisabilityCertificateComboBox.SelectedIndex = yesNo.IndexOf(Entrant.HasDisabilityCertificate ?? "");
+            //hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1
+            //    ? 0
+            //    : hasDisabilityCertificateIndex;
+            
         }
 
         private void SetHasDisabilityCertificateButtonEnabled()
@@ -216,16 +231,16 @@ namespace selection_committee.Windows
         private void FillHasOrphanageDocumentsComboBox()
         {
             hasOrphanageDocumentsComboBox.ItemsSource = yesNo;
-            int hasOrphanageDocumentsIndex = yesNo.IndexOf(Entrant.HasOrphanageDocuments ?? "");
-            hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1
-                ? 0
-                : hasOrphanageDocumentsIndex;
+            hasOrphanageDocumentsComboBox.SelectedIndex = yesNo.IndexOf(Entrant.HasOrphanageDocuments ?? "");
+            //hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1
+            //    ? 0
+            //    : hasOrphanageDocumentsIndex;
         }
 
         private void SetHasOrphanageDocumentsButtonEnabled()
         {
             hasOrphanageDocumentsButton.IsEnabled = false;
-            if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
+            if (hasOrphanageDocumentsComboBox.SelectedIndex == 0)
             {
                 hasOrphanageDocumentsButton.IsEnabled = true;
             }
@@ -244,6 +259,8 @@ namespace selection_committee.Windows
                 Entrant.Subject = subjectComboBox.SelectedItem?.ToString();
                 Entrant.StudyBased = studyBasedComboBox.SelectedItem?.ToString();
                 Entrant.Enlisted = enlistedComboBox.SelectedItem?.ToString();
+                Entrant.HasDisabilityCertificate = hasDisabilityCertificateComboBox.SelectedItem?.ToString();
+                Entrant.HasOrphanageDocuments = hasOrphanageDocumentsComboBox.SelectedItem?.ToString();
             }
             catch
             {
@@ -302,12 +319,18 @@ namespace selection_committee.Windows
         private void disabilityCertificateScan_Click(object sender, RoutedEventArgs e)
         {
             byte[]? disabilityCertificateScan = LoadFile();
+            if (disabilityCertificateScan != null) 
+                hasDisabilityCertificateButton.Background =
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
             Entrant.DisabilityCertificateScan = disabilityCertificateScan;
         }
 
         private void orphanageDocumentsScan_Click(object sender, RoutedEventArgs e)
         {
             byte[]? orphanageDocumentsScan = LoadFile();
+            if (orphanageDocumentsScan_Click != null)
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
             Entrant.OrphanageDocumentsScan = orphanageDocumentsScan;
         }
 
@@ -339,22 +362,44 @@ namespace selection_committee.Windows
             TimeSpan age = DateTime.Today - birthDate;
             int years = (int)(age.TotalDays / 365.25);
             ageLabel.Content = years.ToString();
+            Entrant.Age = years;
         }
 
         private void hasDisabilityCertificateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
+            {
                 hasDisabilityCertificateButton.IsEnabled = true;
+                Entrant.HasDisabilityCertificate = "Да";
+            }
             else
+            {
+                hasDisabilityCertificateButton.Background =
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
                 hasDisabilityCertificateButton.IsEnabled = false;
+                Entrant.DisabilityCertificateScan = null;
+                Entrant.HasDisabilityCertificate = "Нет";
+            }
+                
         }
 
         private void hasOrphanageDocumentsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (hasOrphanageDocumentsComboBox.SelectedIndex == 0)
+            {
                 hasOrphanageDocumentsButton.IsEnabled = true;
+                Entrant.HasOrphanageDocuments = "Да";
+            }
+                
             else
+            {
+                hasOrphanageDocumentsButton.Background =
+                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
                 hasOrphanageDocumentsButton.IsEnabled = false;
+                Entrant.OrphanageDocumentsScan = null;
+                Entrant.HasOrphanageDocuments = "Нет";
+            }
+                
         }
 
         private void subjectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -389,5 +434,6 @@ namespace selection_committee.Windows
                 yearOfEnlistedLabel.Content = "";
             
         }
+
     }
 }
