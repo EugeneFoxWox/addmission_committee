@@ -191,7 +191,7 @@
         <Button Content="Загрузить скан документа" 
                 Grid.Column="2"
                 Grid.Row="6"
-                Click="Scan_Click" 
+                Click="disabilityCertificateScan_Click" 
                 Margin="4,39,4,39" 
                 Grid.RowSpan="4" 
                 x:Name="hasDisabilityCertificateButton"
@@ -216,7 +216,7 @@
         <Button Content="Загрузить скан документа" 
             Grid.Column="3"
             Grid.Row="6"
-            Click="Scan_Click" 
+            Click="orphanageDocumentsScan_Click" 
             x:Name="hasOrphanageDocumentsButton"
             Margin="4,39,4,39" Grid.RowSpan="4" Cursor="Hand"/>
         <ComboBox   Grid.Column="4"
@@ -274,5 +274,19 @@
             x:Name="kostroma_districtsComboBox"
             Margin="0,4,0,0"
             Grid.Row="4" />
+        <ComboBox   Grid.Column="2"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    MinWidth="100"
+                    x:Name="enlistedComboBox"
+                    Margin="0,7,0,0"
+                    Grid.Row="9" SelectionChanged="enlistedComboBox_SelectionChanged"/>
+        <Label Grid.Column="2" Content="{Binding yearOfEnlisted}" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            Height="27"
+            Grid.Row="10"
+            x:Name="yearOfEnlistedLabel"
+    />
     </Grid>
 </Window>

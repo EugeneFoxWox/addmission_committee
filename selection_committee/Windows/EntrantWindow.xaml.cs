@@ -114,6 +114,7 @@ namespace selection_committee.Windows
             Entrant = entrant;
             DataContext = Entrant;
 
+            FillEnlistedComboBox();
             FillGenderComboBox();
             FillStudyBasedComboBox();
             FillSpecialityComboBox();
@@ -127,6 +128,11 @@ namespace selection_committee.Windows
             SetHasOrphanageDocumentsButtonEnabled();
         }
 
+        private void FillEnlistedComboBox()
+        {
+            enlistedComboBox.ItemsSource = yesNo;
+            enlistedComboBox.SelectedIndex = yesNo.IndexOf(Entrant.Enlisted ?? "");
+        }
         private void FillGenderComboBox()
         {
             genderComboBox.ItemsSource = genders;
@@ -237,6 +243,7 @@ namespace selection_committee.Windows
                 Entrant.District = kostroma_districtsComboBox.SelectedItem?.ToString();
                 Entrant.Subject = subjectComboBox.SelectedItem?.ToString();
                 Entrant.StudyBased = studyBasedComboBox.SelectedItem?.ToString();
+                Entrant.Enlisted = enlistedComboBox.SelectedItem?.ToString();
             }
             catch
             {
@@ -250,7 +257,11 @@ namespace selection_committee.Windows
             try
             {
                 FillEntrantData();
-                
+
+                Entrant.YearOfEnlisted = enlistedComboBox.SelectedIndex == 0
+                    ? DateTime.Now.Year.ToString()
+                    : "";
+
                 if (citizenshipComboBox.SelectedIndex == 2)
                 {
                     Entrant.Citizenship = citizenshipTextBox.Text;
@@ -288,12 +299,17 @@ namespace selection_committee.Windows
                 return null;
             }
         }
-        private void Scan_Click(object sender, RoutedEventArgs e)
+        private void disabilityCertificateScan_Click(object sender, RoutedEventArgs e)
         {
-            byte[]? file = LoadFile();
-            MessageBox.Show(file?.ToString(), "Файл не загружен");
+            byte[]? disabilityCertificateScan = LoadFile();
+            Entrant.DisabilityCertificateScan = disabilityCertificateScan;
         }
 
+        private void orphanageDocumentsScan_Click(object sender, RoutedEventArgs e)
+        {
+            byte[]? orphanageDocumentsScan = LoadFile();
+            Entrant.OrphanageDocumentsScan = orphanageDocumentsScan;
+        }
 
         private void citizenshipComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -361,7 +377,17 @@ namespace selection_committee.Windows
                    !string.IsNullOrEmpty(entrant.Subject) &&
                    !string.IsNullOrEmpty(entrant.CertificateNumber) &&
                    !string.IsNullOrEmpty(entrant.Finished9Or11Grade) &&
+                   !string.IsNullOrEmpty(entrant.Enlisted) &&
                    (entrant.Gender == "Мужской" || entrant.Gender == "Женский");  // проверяем корректность поля Gender
+        }
+
+        private void enlistedComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (enlistedComboBox.SelectedIndex == 0)
+                yearOfEnlistedLabel.Content = DateTime.Now.Year.ToString();
+            else
+                yearOfEnlistedLabel.Content = "";
+            
         }
     }
 }

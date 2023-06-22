@@ -5,6 +5,7 @@ using selection_committee.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,7 +86,11 @@ namespace selection_committee
                 DateOfBirth = entrant.DateOfBirth,
                 Subject = entrant.Subject,
                 CertificateNumber = entrant.CertificateNumber,
-                StudyBased = entrant.StudyBased
+                StudyBased = entrant.StudyBased,
+                Enlisted = entrant.Enlisted,
+                YearOfEnlisted = entrant.YearOfEnlisted,
+                OrphanageDocumentsScan = entrant.OrphanageDocumentsScan,
+                DisabilityCertificateScan = entrant.DisabilityCertificateScan,
             });
 
             if (EntrantWindow.ShowDialog() == true)
@@ -109,9 +114,53 @@ namespace selection_committee
                     entrant.Subject = EntrantWindow.Entrant.Subject;
                     entrant.CertificateNumber = EntrantWindow.Entrant.CertificateNumber;
                     entrant.StudyBased = EntrantWindow.Entrant.StudyBased;
+                    entrant.Enlisted = EntrantWindow.Entrant.Enlisted;
+                    entrant.YearOfEnlisted = EntrantWindow.Entrant.YearOfEnlisted;
+                    entrant.DisabilityCertificateScan = EntrantWindow.Entrant.DisabilityCertificateScan;
+                    entrant.OrphanageDocumentsScan = EntrantWindow.Entrant.OrphanageDocumentsScan;
                 }
             }
             db.SaveChanges();
+        }
+
+        private void SaveFile(byte[]? file)
+        {
+            if (file == null)
+            {
+                MessageBox.Show("Файл еще не загружен", "Ошибка");
+                return;
+            }
+            byte[] fileBytes = file;
+
+            // Создать диалог сохранения файла
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+            saveDialog.FileName = "скан.png";
+            saveDialog.DefaultExt = ".png";
+
+            bool? result = saveDialog.ShowDialog(); // Отобразить диалог
+
+            if (result == true)
+            {
+                string filePath = saveDialog.FileName; // Получить путь к файлу из диалога
+
+                // Записать байты в файл
+                File.WriteAllBytes(filePath, fileBytes);
+            }
+        }
+        private void btnViewDisability_Click(object sender, RoutedEventArgs e)
+        {
+            Entrant? entrant = entrantsList.SelectedItem as Entrant;
+            if (entrant == null) return;
+            entrant = db.Entrants.Find(entrant.Id);
+            SaveFile(entrant?.DisabilityCertificateScan);
+        }
+
+        private void btnViewOrphanhood_Click(object sender, RoutedEventArgs e)
+        {
+            Entrant? entrant = entrantsList.SelectedItem as Entrant;
+            if (entrant == null) return;
+            entrant = db.Entrants.Find(entrant.Id);
+            SaveFile(entrant?.OrphanageDocumentsScan);
         }
     }
 }
