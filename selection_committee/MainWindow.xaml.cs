@@ -38,9 +38,22 @@ namespace selection_committee
             Loaded += MainWindow_Loaded;
         }
 
+        private List<string> speciality = new List<string>()
+        {
+            "Все специальности",
+            "Архитектура",
+            "Гидрогеология и инженерная геология",
+            "Информационные системы и программирование (на базе 9 классов)",
+            "Строительство и эксплуатация зданий и сооружений (на базе 9 классов)",
+            "Разработка электронных устройств и систем",
+            "Информационные системы и программирование (на базе 11 классов)",
+            "Строительство и эксплуатация зданий и сооружений (на базе 11 классов)"
+        };
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
+            specialityComboBox.ItemsSource = speciality;
+            specialityComboBox.SelectedIndex = 0;
             db.Database.EnsureCreated();
             db.Entrants.Load();
             ObservableCollection<Entrant> entrants = db.Entrants.Local.ToObservableCollection();
@@ -288,6 +301,16 @@ namespace selection_committee
                     
                 }
             }
+        }
+        
+        private void specialityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string currentSpeciality = specialityComboBox.SelectedItem.ToString() ?? "";
+
+            DataContext = currentSpeciality == "Все специальности"
+                ? db.Entrants.Local.Where(el => el.Speciality == currentSpeciality)
+                : db.Entrants.Local.ToObservableCollection();
+
         }
     }
 }

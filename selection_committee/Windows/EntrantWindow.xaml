@@ -20,19 +20,19 @@
     </Window.Resources>
     <Grid Background="#FFCAE5F0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="6*" />
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
-            <RowDefinition Height="13*" />
 
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="13*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition  />
@@ -41,218 +41,246 @@
             <ColumnDefinition />
             <ColumnDefinition  />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Фамилия"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Height="16" Width="50"/>
-        <TextBlock Text="Имя" 
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Grid.Column="1" Height="16" Width="24"/>
-        <TextBlock Text="Отчество" 
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Grid.Column="2" Height="16" Width="52"/>
-        <TextBlock Text="Пол 🚻"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Grid.Column="3" Height="16" Width="52"/>
+
+        <Border BorderBrush="#3456A6" 
+                BorderThickness="1" 
+                VerticalAlignment="Bottom" 
+                Grid.Row="1" 
+                Grid.ColumnSpan="5"
+                Margin="0">
+            <Grid/>
+        </Border>
+
+        <Border BorderBrush="#3456A6" 
+                BorderThickness="1" 
+                VerticalAlignment="Bottom" 
+                Grid.Row="4" 
+                Grid.ColumnSpan="5"
+                Margin="0">
+            <Grid/>
+        </Border>
+
+        <Border BorderBrush="#3456A6" 
+                BorderThickness="1" 
+                VerticalAlignment="Bottom" 
+                Grid.Row="7" 
+                Grid.ColumnSpan="5"
+                Margin="0">
+            <Grid/>
+        </Border>
+
+        <Border BorderBrush="#3456A6" 
+                BorderThickness="1" 
+                VerticalAlignment="Bottom" 
+                Grid.Row="10" 
+                Grid.ColumnSpan="5"
+                Margin="0">
+            <Grid/>
+        </Border>
+
+
+        <TextBlock Width="auto" Text="Фамилия"
+                   
+                   VerticalAlignment="Center" />
+        <TextBlock Width="auto" Text="Имя" 
+                   
+                   VerticalAlignment="Center" Grid.Column="1"/>
+        <TextBlock Width="auto" Text="Отчество" 
+                   
+                   VerticalAlignment="Center" Grid.Column="2"/>
+        <TextBlock Width="auto" Text="Пол 🚻"
+                   
+                   VerticalAlignment="Center" Grid.Column="3"  />
+
         <TextBox Text="{Binding Surname}" 
-                 VerticalAlignment="Top" 
+                 VerticalAlignment="Center" 
                  Grid.Row="1" 
-                 HorizontalAlignment="Center"
-                 MinWidth="100" Margin="0,8,0,0"/>
+                 
+                 MinWidth="100" />
         <TextBox Text="{Binding Name}" 
                  Grid.Column="1" 
-                 VerticalAlignment="Top" 
-                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center" 
                  MinWidth="100"
-                 Grid.Row="1" Margin="0,8,0,0" />
+                 Grid.Row="1" />
         <TextBox Text="{Binding Patronymic}" 
                  Grid.Column="2" 
-                 HorizontalAlignment="Center"
                  MinWidth="100"
-                 VerticalAlignment="Top" 
-                 Grid.Row="1" Margin="0,8,0,0" />
+                 VerticalAlignment="Center" 
+                 Grid.Row="1" />
         <ComboBox SelectedItem="{Binding Gender}" 
                   Grid.Column="3"
-                  HorizontalAlignment="Center"
+                  Grid.Row="1"
+                  Margin="8,0,8,0"
                   MinWidth="100"
-                  VerticalAlignment="Top"
-                  x:Name="genderComboBox" Margin="0,39,0,0" Grid.RowSpan="2" >
-        </ComboBox>
-
-        <StackPanel HorizontalAlignment="Center" 
-                    Orientation="Horizontal" 
-                    Grid.Row="11" 
-                    Grid.Column="2">
-            <Button IsDefault="True" Click="Accept_Click" Cursor="Hand" Background="#FF4B8FCB" BorderBrush="Black" Foreground="Black" >И так сойдет
-            </Button>
-            <Button IsCancel="True" Cursor="Hand" >Отмена</Button>
-        </StackPanel>
-        <TextBlock Text="СНИЛС"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center" Grid.Column="4" Height="16" Width="46"/>
+                  Height="25"
+                  VerticalAlignment="Center"
+                  x:Name="genderComboBox" />
+        <TextBlock Width="auto" Text="СНИЛС"
+                   
+                   VerticalAlignment="Center" 
+                   Grid.Column="4" />
         <TextBox Text="{Binding SNILS}" 
                  Grid.Column="4" 
-                 VerticalAlignment="Top" 
-                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center" 
+                 
                  MinWidth="100"
-                 Grid.Row="1" Margin="0,8,0,0" />
-        <TextBlock Text="Дата рождения"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top" Height="16" Width="86" Grid.Row="2" Margin="0,8,0,0"/>
-        <TextBlock Text="Возраст" 
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" Grid.Column="1" Margin="56,5,0,0" Height="16" Width="44" Grid.Row="2"/>
+                 Grid.Row="1"  />
+        
+        <TextBlock Width="auto" Text="Дата рождения"
+                   
+                   VerticalAlignment="Center" 
+                   Height="16" 
+                   Grid.Row="2" />
+        <TextBlock Width="auto" Text="Возраст" 
+                   
+                   VerticalAlignment="Center" 
+                   Grid.Column="1" 
+                   Height="16" 
+                   Grid.Row="2"/>
         <Label Grid.Column="1" Content="{Binding Age}" 
-               HorizontalAlignment="Center" 
-               VerticalAlignment="Top" 
+                
+               VerticalAlignment="Center" 
                Height="27"
                Grid.Row="3"
-               x:Name="ageLabel"
-               Margin="0,8,0,0" />
-        <TextBlock Text="Гражданство"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top" Height="16" Width="74" Grid.Row="2" Margin="0,5,0,0" Grid.Column="2"/>
-        <ComboBox 
-                   Grid.Column="2"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Left"
+               x:Name="ageLabel"/>
+        <TextBlock Width="auto" Text="Гражданство"
+                   
+                   VerticalAlignment="Center" 
+                   Height="16" 
+                   Grid.Row="2" 
+                   Grid.Column="2"/>
+        <ComboBox  Grid.Column="2"
+                   VerticalAlignment="Center"
                    MinWidth="100"
+                   Margin="8,0,8,0"
                    x:Name="citizenshipComboBox"
-                   Margin="34,39,0,0"
-                   Grid.Row="2" Grid.RowSpan="2" SelectionChanged="citizenshipComboBox_SelectionChanged"/>
-
-
+                   Grid.Row="3" 
+                   SelectionChanged="citizenshipComboBox_SelectionChanged"/>
         <TextBox Grid.Column="2"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 
                  x:Name="citizenshipTextBox"
                  MinWidth="100"
-                 Grid.Row="4" Margin="0,8,0,0" />
-        <TextBlock Text="Место проживания"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top" Height="16" Width="108" Grid.Row="2" Margin="0,5,0,0" Grid.Column="3"/>
-        <TextBlock Text="Окончил"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top" Height="16" Width="64" Grid.Row="2" Margin="52,8,0,0" Grid.Column="4" RenderTransformOrigin="0.37,0.011"/>
-        <ComboBox  Grid.Column="4"
-                    VerticalAlignment="Top"
-                    x:Name="finishedOnlyComboBox"
-                    HorizontalAlignment="Center"
-                    MinWidth="100"
-                    Margin="0,39,0,0"
-                    Grid.Row="2" Grid.RowSpan="2" SelectionChanged="finishedOnlyComboBox_SelectionChanged"/>
-
-        <TextBox    Grid.Column="4"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
-                    MinWidth="100"
-                    x:Name="finishedOnlyTextBox"
-                    Grid.Row="4" Margin="0,8,0,0" />
-
-        <TextBlock Text="Средний балл аттестата"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" 
+                 Grid.Row="4"/>
+        <TextBlock Width="auto" Text="Место проживания"
+                   
+                   VerticalAlignment="Center" 
                    Height="16" 
-                   Width="143" 
-                   Grid.Row="5" 
-                   Margin="19,11,0,0" 
-                   Grid.ColumnSpan="2"/>
+                   Grid.Row="2" 
+                   Grid.Column="3"/>
+        <TextBlock Width="auto" Text="Окончил"
+                   
+                   VerticalAlignment="Center" 
+                   Height="16" 
+                   Grid.Row="2" 
+                   Grid.Column="4"/>
+        <ComboBox  Grid.Column="4"
+                   Grid.Row="3" 
+                   x:Name="finishedOnlyComboBox"
+                   VerticalAlignment="Center"
+                   Margin="8,0,8,0"
+                   MinWidth="100"
+                   SelectionChanged="finishedOnlyComboBox_SelectionChanged"/>
+        <TextBox Grid.Column="4"
+                 VerticalAlignment="Center"
+                 
+                 MinWidth="100"
+                 x:Name="finishedOnlyTextBox"
+                 Grid.Row="4"  />
+        <TextBlock Width="auto" Text="Средний балл аттестата"
+                   
+                   VerticalAlignment="Center" 
+                   Height="16" 
+                   Grid.Row="5" />
         <TextBox Text="{Binding AverageScore}"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 
                  MinWidth="100"
-                 Grid.Row="6" Margin="0,8,0,0" />
-        <TextBlock Text="Номер аттестат🎈"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Center" Height="20" Width="99" Grid.Row="5" Margin="32,0,0,0" Grid.Column="1"/>
-        <TextBox Text="{Binding CertificateNumber}"
-                 Grid.Column="1"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Left"
-                 MinWidth="100"
-                 x:Name="certificateNumberTextBox"
-                 Margin="32,4,0,0"
-                 Grid.Row="6"/>
-        <TextBlock Text="Cправка об инвалидности"
-                   HorizontalAlignment="Center"
+                 Grid.Row="6"  />
+        <TextBlock Width="auto" Text="Номер аттестата🎈"
+                   
                    VerticalAlignment="Center" 
                    Height="20" 
-                   Width="144" 
+                   Grid.Row="5" 
+                   Grid.Column="1"/>
+        <TextBox Text="{Binding CertificateNumber}"
+                 Grid.Column="1"
+                 VerticalAlignment="Center"
+                 
+                 MinWidth="100"
+                 x:Name="certificateNumberTextBox"
+                 
+                 Grid.Row="6"/>
+        <TextBlock Width="auto" Text="Cправка об инвалидности"
+                   
+                   VerticalAlignment="Center" 
                    Grid.Row="5" 
                    Grid.Column="2"/>
         <ComboBox   Grid.Column="2"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="8,0,8,0"
                     MinWidth="100"
                     x:Name="hasDisabilityCertificateComboBox"
                     SelectionChanged="hasDisabilityCertificateComboBox_SelectionChanged"
-                    Margin="0,4,0,0"
-                    Grid.Row="6">
-        </ComboBox>
-        <Button Content="Загрузить скан документа" 
+                    Grid.Row="6"></ComboBox>
+        <Button Content="Загрузить скан" 
                 Grid.Column="2"
-                Grid.Row="6"
+                Grid.Row="7"
                 Click="disabilityCertificateScan_Click" 
-                Margin="4,39,4,39" 
-                Grid.RowSpan="4" 
                 x:Name="hasDisabilityCertificateButton"
                 Cursor="Hand"/>
-        <TextBlock Text="Cправка о сиротстве"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center" Height="20" Width="116" Grid.Row="5" Grid.Column="3"/>
-        <TextBlock Text="Cпециальность 👨‍🎓"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center" Height="20" Width="106" Grid.Row="5" Grid.Column="4"/>
+        <TextBlock Width="auto" Text="Cправка о сиротстве"
+        
+        VerticalAlignment="Center" Height="20"  Grid.Row="5" Grid.Column="3"/>
+        <TextBlock Width="auto" Text="Cпециальность 👨‍🎓"
+        
+        VerticalAlignment="Center" Height="20" Grid.Row="5" Grid.Column="4"/>
         <ComboBox 
             Grid.Column="3"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="8,0,8,0"
             MinWidth="100"
             x:Name="hasOrphanageDocumentsComboBox"
             SelectionChanged="hasOrphanageDocumentsComboBox_SelectionChanged"
-            Margin="34,4,0,0"
             Grid.Row="6"/>
-
-
-        <Button Content="Загрузить скан документа" 
+        <Button Content="Загрузить скан " 
             Grid.Column="3"
-            Grid.Row="6"
+            Grid.Row="7"
             Click="orphanageDocumentsScan_Click" 
             x:Name="hasOrphanageDocumentsButton"
-            Margin="4,39,4,39" Grid.RowSpan="4" Cursor="Hand"/>
+            Cursor="Hand"/>
         <ComboBox   Grid.Column="4"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="8,0,8,0"
                     MinWidth="100"
                     x:Name="specialityComboBox"
-                    Margin="34,4,0,0"
                     Grid.Row="6"/>
-
-        <TextBlock Text="Учеба на основе"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Top" Height="16" Width="100" Grid.Row="9" Margin="0,3,0,0" Cursor="Wait"/>
-        <ComboBox   VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
+        <TextBlock Width="auto" Text="Учеба на основе"
+        
+        VerticalAlignment="Center" Height="16" Grid.Row="9" Cursor="Wait"/>
+        <ComboBox   VerticalAlignment="Center"
+                    Margin="8,0,8,0"
                     MinWidth="100"
                     x:Name="studyBasedComboBox"
-                    Margin="23,4,0,0"
                     Grid.Row="10"/>
-
-
-        <TextBlock Grid.ColumnSpan="2" Margin="19,11,105,4" Grid.Row="11" >
-          <Hyperlink NavigateUri="http://www.google.com" >
-                Click here
+        <TextBlock Width="auto" Grid.ColumnSpan="2" Grid.Row="11" >
+			<Hyperlink  Click="Hyperlink_Click">
+                Правила приема
            </Hyperlink>
         </TextBlock>
-
-        <TextBlock
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center" Height="16" Width="64" Grid.Row="9" Margin="10,0,0,0" Cursor="" Grid.Column="1"><Run Text="Зачислен"/><Run Language="ru-ru" Text=":"/></TextBlock>
-        <TextBlock
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" Height="16" Width="111" Grid.Row="10" Margin="10,10,0,0" Cursor="" Grid.Column="1"><Run Text="Год поступления"/><Run Language="ru-ru" Text=":"/></TextBlock>
+        <TextBlock Width="auto"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center" Height="16" Grid.Row="9" Grid.Column="1">
+			Зачислен:
+        </TextBlock>
+        <TextBlock Width="auto"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center" 
+            Height="16" Grid.Row="10" Cursor="" Grid.Column="1">
+			Год поступления:
+        </TextBlock>
         <DatePicker SelectedDate="{Binding DateOfBirth, Mode=TwoWay}" 
-                    HorizontalAlignment="Left" 
-                    Margin="19,0,0,0"
+                     
                     Grid.Row="3"
                     x:Name="DatePicker"
                     VerticalAlignment="Center"
@@ -260,33 +288,38 @@
                     Width="133"/>
         <ComboBox
             Grid.Column="3"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Margin="8,0,8,0"
             MinWidth="100"
             x:Name="subjectComboBox"
-            Margin="0,39,0,0"
-            Grid.Row="2" Grid.RowSpan="2" SelectionChanged="subjectComboBox_SelectionChanged"/>
+            Grid.Row="3"  SelectionChanged="subjectComboBox_SelectionChanged"/>
         <ComboBox
             Grid.Column="3"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Margin="8,0,8,0"
             MinWidth="100"
             x:Name="kostroma_districtsComboBox"
-            Margin="0,4,0,0"
             Grid.Row="4" />
         <ComboBox   Grid.Column="2"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="8,0,8,0"
                     MinWidth="100"
                     x:Name="enlistedComboBox"
-                    Margin="0,7,0,0"
                     Grid.Row="9" SelectionChanged="enlistedComboBox_SelectionChanged"/>
         <Label Grid.Column="2" Content="{Binding yearOfEnlisted}" 
-            HorizontalAlignment="Center" 
+             
             VerticalAlignment="Center" 
-            Height="27"
             Grid.Row="10"
             x:Name="yearOfEnlistedLabel"
     />
+        <StackPanel  
+                    Orientation="Horizontal" 
+                    Grid.Row="11" 
+                    Grid.Column="2">
+            <Button IsDefault="True" Click="Accept_Click" Cursor="Hand" Background="#FF4B8FFF" BorderBrush="Black" Foreground="Black" >Окей
+            </Button>
+            <Button IsCancel="True" Cursor="Hand" >Отмена</Button>
+        </StackPanel>
     </Grid>
+    
 </Window>

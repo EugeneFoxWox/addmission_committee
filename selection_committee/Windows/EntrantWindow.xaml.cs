@@ -435,5 +435,14 @@ namespace selection_committee.Windows
             
         }
 
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo("http://kptc.ru/prikaz/Pravila_priema_2023.pdf")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
     }
 }

@@ -1,44 +1,53 @@
-﻿<Window x:Class="selection_committee.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:selection_committee"
-        mc:Ignorable="d"
-        Title="Приемная комиссия" Height="450" Width="800" Icon="/иконамоя.ico">
-        <Grid>
+﻿    <Window x:Class="selection_committee.MainWindow"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:local="clr-namespace:selection_committee"
+            mc:Ignorable="d"
+            Title="Приемная комиссия" Height="450" Width="800" Icon="/иконамоя.ico">
+    <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
+
         <Button Grid.Row="0" Margin="10,10,10,10" Padding="5" Background="Transparent">Приемная комиссия</Button>
 
-        <DataGrid  x:Name="entrantsList"   
-                   CanUserResizeColumns="False" 
-                   ItemsSource="{Binding}"  
-                   IsReadOnly="True" 
-                   AutoGenerateColumns="False" 
-                   Background="White"
-                   Grid.Row="1">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <Label Content="Специальность" Width="auto" Height="30"></Label>
+            <ComboBox Width="200" Height="30" Margin="10 0 10 0" x:Name="specialityComboBox" SelectionChanged="specialityComboBox_SelectionChanged"/>
+
+        </StackPanel>
+
+        <DataGrid x:Name="entrantsList"
+          Grid.Row="2"
+          ItemsSource="{Binding}"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          CanUserResizeColumns="False"
+          Background="White">
+
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Зачислен" Binding="{Binding Enlisted}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Год зачисления" Binding="{Binding YearOfEnlisted}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Пол" Binding="{Binding Gender}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Гражданство" Binding="{Binding Citizenship}"></DataGridTextColumn>
-                <DataGridTextColumn Header="СНИЛС" Binding="{Binding SNILS}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Окончание классов" Binding="{Binding Finished9Or11Grade}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Средний балл аттестата" Binding="{Binding AverageScore}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Субъект РФ" Binding="{Binding Subject}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Специальность" Binding="{Binding Speciality}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Район" Binding="{Binding District}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Номер аттестата" Binding="{Binding CertificateNumber}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Бюджет/Небюджет" Binding="{Binding StudyBased}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                <DataGridTextColumn Header="Зачислен" Binding="{Binding Enlisted}"/>
+                <DataGridTextColumn Header="Год зачисления" Binding="{Binding YearOfEnlisted}"/>
+                <DataGridTextColumn Header="Пол" Binding="{Binding Gender}"/>
+                <DataGridTextColumn Header="Гражданство" Binding="{Binding Citizenship}"/>
+                <DataGridTextColumn Header="СНИЛС" Binding="{Binding SNILS}"/>
+                <DataGridTextColumn Header="Окончание классов" Binding="{Binding Finished9Or11Grade}"/>
+                <DataGridTextColumn Header="Средний балл аттестата" Binding="{Binding AverageScore}"/>
+                <DataGridTextColumn Header="Субъект РФ" Binding="{Binding Subject}"/>
+                <DataGridTextColumn Header="Специальность" Binding="{Binding Speciality}"/>
+                <DataGridTextColumn Header="Район" Binding="{Binding District}"/>
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}"/>
+                <DataGridTextColumn Header="Номер аттестата" Binding="{Binding CertificateNumber}"/>
+                <DataGridTextColumn Header="Бюджет/Небюджет" Binding="{Binding StudyBased}"/>
                 <DataGridTemplateColumn Header="Скан справки об инвалидности">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -55,16 +64,14 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        
+        <StackPanel Grid.Row="3" Orientation="Horizontal" >
             <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
             <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0" Cursor="Hand" Background="#FFEE6F6F"/>
             <Button Content="Изменить / Подробнее" Margin="10" Click="Edit_Click"  Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
             <!--<Button Content="Экспорт в JSON" Margin="10" Click="Json_Click"  Padding="10 0"/>-->
             <Button Content="Экспорт в Excel" Margin="10" Click="Excel_Click"  Padding="10 0"  Background="#00FF00"/>
         </StackPanel>
-
     </Grid>
+
 </Window>
