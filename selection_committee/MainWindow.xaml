@@ -19,6 +19,17 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
             <Label Content="Специальность" Width="auto" Height="30"></Label>
             <ComboBox Width="200" Height="30" Margin="10 0 10 0" x:Name="specialityComboBox" SelectionChanged="specialityComboBox_SelectionChanged"/>
+            <ComboBox x:Name="findEntrantCB"
+                      TextBoxBase.TextChanged="OnComboboxTextChanged"
+                      IsTextSearchEnabled="False" IsEditable="True"
+                      VerticalAlignment="Center" 
+                      Width="256"/>
+            <Button Margin="10" 
+                    Padding="10 0" 
+                    Click="Find_Click"
+                    IsDefault = "true"
+                    Content="Найти"/>
+
 
         </StackPanel>
 
@@ -35,17 +46,17 @@
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+                <DataGridTextColumn Header="Средний балл аттестата" Binding="{Binding AverageScore}"/>
                 <DataGridTextColumn Header="Зачислен" Binding="{Binding Enlisted}"/>
                 <DataGridTextColumn Header="Год зачисления" Binding="{Binding YearOfEnlisted}"/>
+                <DataGridTextColumn Header="Специальность" Binding="{Binding Speciality}"/>
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}"/>
                 <DataGridTextColumn Header="Пол" Binding="{Binding Gender}"/>
                 <DataGridTextColumn Header="Гражданство" Binding="{Binding Citizenship}"/>
                 <DataGridTextColumn Header="СНИЛС" Binding="{Binding SNILS}"/>
                 <DataGridTextColumn Header="Окончание классов" Binding="{Binding Finished9Or11Grade}"/>
-                <DataGridTextColumn Header="Средний балл аттестата" Binding="{Binding AverageScore}"/>
                 <DataGridTextColumn Header="Субъект РФ" Binding="{Binding Subject}"/>
-                <DataGridTextColumn Header="Специальность" Binding="{Binding Speciality}"/>
                 <DataGridTextColumn Header="Район" Binding="{Binding District}"/>
-                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}"/>
                 <DataGridTextColumn Header="Номер аттестата" Binding="{Binding CertificateNumber}"/>
                 <DataGridTextColumn Header="Бюджет/Небюджет" Binding="{Binding StudyBased}"/>
                 <DataGridTemplateColumn Header="Скан справки об инвалидности">
@@ -65,7 +76,7 @@
             </DataGrid.Columns>
         </DataGrid>
         
-        <StackPanel Grid.Row="3" Orientation="Horizontal" >
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Добавить" Margin="10" Click="Add_Click" Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
             <Button Content="Удалить" Margin="10" Click="Delete_Click"  Padding="10 0" Cursor="Hand" Background="#FFEE6F6F"/>
             <Button Content="Изменить / Подробнее" Margin="10" Click="Edit_Click"  Padding="10 0" Cursor="Hand" Background="#FF389EEB"/>
