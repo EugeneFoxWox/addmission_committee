@@ -72,6 +72,7 @@ namespace selection_committee
             }
             db.SaveChanges();
             ObservableCollection<Entrant> entrants = db.Entrants.Local.ToObservableCollection();
+            MakeComboboxItems(entrants);
             DataContext = entrants;
         }
 
@@ -110,6 +111,7 @@ namespace selection_committee
             db.Entrants.Remove(entrant);
             db.SaveChanges();
             ObservableCollection<Entrant> entrants = db.Entrants.Local.ToObservableCollection();
+            MakeComboboxItems(entrants);
             DataContext = entrants;
         }
         private void Edit_Click(object sender, RoutedEventArgs e)
@@ -123,6 +125,8 @@ namespace selection_committee
             {
                 db.Entry(entrant).CurrentValues.SetValues(editedEntrant);
                 db.SaveChanges();
+                ObservableCollection<Entrant> entrants = db.Entrants.Local.ToObservableCollection();
+                MakeComboboxItems(entrants);
             }
         }
 

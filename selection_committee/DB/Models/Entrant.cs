@@ -10,7 +10,6 @@ namespace selection_committee.DB.Models
 {
     public class Entrant : INotifyPropertyChanged
     {
-
         public int Id { get; set; }
 
         private string? surname;

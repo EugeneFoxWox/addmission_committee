@@ -15,7 +15,5 @@ namespace selection_committee.DB
         {
             optionsBuilder.UseSqlite("Data Source=app.db");
         }
-
-
     }
 }
