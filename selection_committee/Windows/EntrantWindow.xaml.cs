@@ -114,138 +114,68 @@ namespace selection_committee.Windows
             Entrant = entrant;
             DataContext = Entrant;
 
-            if (Entrant.DisabilityCertificateScan != null) 
-                hasDisabilityCertificateButton.Background = 
-                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
-            else 
-                hasDisabilityCertificateButton.Background = 
-                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
+            SetButtonBackground(hasDisabilityCertificateButton, Entrant.DisabilityCertificateScan);
+            SetButtonBackground(hasOrphanageDocumentsButton, Entrant.OrphanageDocumentsScan);
 
-            if (Entrant.OrphanageDocumentsScan != null)
-                hasOrphanageDocumentsButton.Background =
-                    new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            FillComboBox(enlistedComboBox, yesNo, Entrant.Enlisted);
+            FillComboBox(genderComboBox, genders, Entrant.Gender);
+            FillComboBox(studyBasedComboBox, studyBasedList, Entrant.StudyBased);
+            FillComboBox(specialityComboBox, speciality, Entrant.Speciality);
+            FillComboBox(kostroma_districtsComboBox, district, Entrant.District);
+            FillComboBox(subjectComboBox, subject, Entrant.Subject);
+
+            FillVariantsComboBox(finishedOnlyComboBox, finishedOnlyTextBox, variants9Or11Years, Entrant.Finished9Or11Grade);
+            FillVariantsComboBox(citizenshipComboBox, citizenshipTextBox, citizenship, Entrant.Citizenship);
+
+            FillYesNoComboBox(hasDisabilityCertificateComboBox, Entrant.HasDisabilityCertificate);
+            SetButtonEnabled(hasDisabilityCertificateButton, hasDisabilityCertificateComboBox, 0);
+
+            FillYesNoComboBox(hasOrphanageDocumentsComboBox, Entrant.HasOrphanageDocuments);
+            SetButtonEnabled(hasOrphanageDocumentsButton, hasOrphanageDocumentsComboBox, 0);
+        }
+
+        private void SetButtonBackground(Button button, object value)
+        {
+            if (value != null)
+                button.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
             else
-                hasOrphanageDocumentsButton.Background =
-                    new SolidColorBrush(Color.FromRgb(128, 128, 128));
-
-            FillEnlistedComboBox();
-            FillGenderComboBox();
-            FillStudyBasedComboBox();
-            FillSpecialityComboBox();
-            FillKostromaDistrictsComboBox();
-            FillSubjectComboBox();
-            FillFinishedOnlyComboBox();
-            FillCitizenshipComboBox();
-            FillHasDisabilityCertificateComboBox();
-            SetHasDisabilityCertificateButtonEnabled();
-            FillHasOrphanageDocumentsComboBox();
-            SetHasOrphanageDocumentsButtonEnabled();
+                button.Background = new SolidColorBrush(Color.FromRgb(128, 128, 128));
         }
 
-        private void FillEnlistedComboBox()
+        private void FillComboBox(ComboBox comboBox, List<string> values, string selectedValue)
         {
-            enlistedComboBox.ItemsSource = yesNo;
-            enlistedComboBox.SelectedIndex = yesNo.IndexOf(Entrant.Enlisted ?? "");
-        }
-        private void FillGenderComboBox()
-        {
-            genderComboBox.ItemsSource = genders;
-            genderComboBox.SelectedIndex = genders.IndexOf(Entrant.Gender ?? "");
+            comboBox.ItemsSource = values;
+            comboBox.SelectedIndex = values.IndexOf(selectedValue ?? "");
         }
 
-        private void FillStudyBasedComboBox()
+        private void FillVariantsComboBox(ComboBox comboBox, TextBox textBox, List<string> values, string selectedValue)
         {
-            studyBasedComboBox.ItemsSource = studyBasedList;
-            studyBasedComboBox.SelectedIndex = studyBasedList.IndexOf(Entrant.StudyBased ?? "");
-        }
+            textBox.IsEnabled = false;
+            comboBox.ItemsSource = values;
+            int index = values.IndexOf(selectedValue ?? "");
+            comboBox.SelectedIndex = index == -1 ? 2 : index;
 
-        private void FillSpecialityComboBox()
-        {
-            specialityComboBox.ItemsSource = speciality;
-            specialityComboBox.SelectedIndex = speciality.IndexOf(Entrant.Speciality ?? "");
-        }
-
-        private void FillKostromaDistrictsComboBox()
-        {
-            kostroma_districtsComboBox.ItemsSource = district;
-            if (Entrant.District != null && Entrant.District.Contains("Костром"))
-                kostroma_districtsComboBox.IsEnabled = true;
-            else
-                kostroma_districtsComboBox.IsEnabled = false;
-            kostroma_districtsComboBox.SelectedIndex = district.IndexOf(Entrant.District ?? "");
-        }
-
-        private void FillSubjectComboBox()
-        {
-            subjectComboBox.ItemsSource = subject;
-            subjectComboBox.SelectedIndex = subject.IndexOf(Entrant.Subject ?? "");
-        }
-
-        private void FillFinishedOnlyComboBox()
-        {
-            finishedOnlyTextBox.IsEnabled = false;
-            finishedOnlyComboBox.ItemsSource = variants9Or11Years;
-            int finishedOnlyIndex = variants9Or11Years.IndexOf(Entrant.Finished9Or11Grade ?? "");
-            finishedOnlyComboBox.SelectedIndex = finishedOnlyIndex == -1 ? 2 : finishedOnlyIndex;
-
-            if (finishedOnlyComboBox.SelectedIndex == 2 && Entrant.Finished9Or11Grade != null)
+            if (comboBox.SelectedIndex == 2 && selectedValue != null)
             {
-                finishedOnlyTextBox.Text = Entrant.Finished9Or11Grade;
-                finishedOnlyTextBox.IsEnabled = true;
+                textBox.Text = selectedValue;
+                textBox.IsEnabled = true;
             }
         }
 
-        private void FillCitizenshipComboBox()
+        private void FillYesNoComboBox(ComboBox comboBox, string selectedValue)
         {
-            citizenshipTextBox.IsEnabled = false;
-            citizenshipComboBox.ItemsSource = citizenship;
-            int citizenshipIndex = citizenship.IndexOf(Entrant.Citizenship ?? "");
-            citizenshipComboBox.SelectedIndex = citizenshipIndex == -1 ? 2 : citizenshipIndex;
+            comboBox.ItemsSource = yesNo;
+            comboBox.SelectedIndex = yesNo.IndexOf(selectedValue ?? "");
+        }
 
-            if (citizenshipComboBox.SelectedIndex == 2 && Entrant.Citizenship != null)
+        private void SetButtonEnabled(Button button, ComboBox comboBox, int index)
+        {
+            button.IsEnabled = false;
+            if (comboBox.SelectedIndex == index)
             {
-                citizenshipTextBox.Text = Entrant.Citizenship;
-                citizenshipTextBox.IsEnabled = true;
+                button.IsEnabled = true;
             }
         }
-
-        private void FillHasDisabilityCertificateComboBox()
-        {
-            hasDisabilityCertificateComboBox.ItemsSource = yesNo;
-            hasDisabilityCertificateComboBox.SelectedIndex = yesNo.IndexOf(Entrant.HasDisabilityCertificate ?? "");
-            //hasDisabilityCertificateComboBox.SelectedIndex = hasDisabilityCertificateIndex == -1
-            //    ? 0
-            //    : hasDisabilityCertificateIndex;
-            
-        }
-
-        private void SetHasDisabilityCertificateButtonEnabled()
-        {
-            hasDisabilityCertificateButton.IsEnabled = false;
-            if (hasDisabilityCertificateComboBox.SelectedIndex == 0)
-            {
-                hasDisabilityCertificateButton.IsEnabled = true;
-            }
-        }
-
-        private void FillHasOrphanageDocumentsComboBox()
-        {
-            hasOrphanageDocumentsComboBox.ItemsSource = yesNo;
-            hasOrphanageDocumentsComboBox.SelectedIndex = yesNo.IndexOf(Entrant.HasOrphanageDocuments ?? "");
-            //hasOrphanageDocumentsComboBox.SelectedIndex = hasOrphanageDocumentsIndex == -1
-            //    ? 0
-            //    : hasOrphanageDocumentsIndex;
-        }
-
-        private void SetHasOrphanageDocumentsButtonEnabled()
-        {
-            hasOrphanageDocumentsButton.IsEnabled = false;
-            if (hasOrphanageDocumentsComboBox.SelectedIndex == 0)
-            {
-                hasOrphanageDocumentsButton.IsEnabled = true;
-            }
-        }
-
 
         private void FillEntrantData()
         {
