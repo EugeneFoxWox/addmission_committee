@@ -36,6 +36,7 @@ namespace selection_committee
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            
         }
 
         private List<string> speciality = new List<string>()
@@ -58,6 +59,7 @@ namespace selection_committee
             db.Entrants.Load();
             ObservableCollection<Entrant> entrants = db.Entrants.Local.ToObservableCollection();
             DataContext = entrants;
+            MakeComboboxItems(entrants);
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -72,6 +74,43 @@ namespace selection_committee
             ObservableCollection<Entrant> entrants = db.Entrants.Local.ToObservableCollection();
             DataContext = entrants;
         }
+
+        private void Find_Click(object sender, RoutedEventArgs e)
+        {
+            string value = findEntrantCB.Text;
+            ObservableCollection<Entrant> entrants = new ObservableCollection<Entrant>();
+
+
+
+            if (value.Trim().Equals(""))
+            {
+                DataContext = db.Entrants.Local.ToObservableCollection();
+                return;
+            }
+
+            foreach (Entrant ent in db.Entrants)
+            {
+                string fullName = string.Format("{0} {1} {2}", ent.Surname, ent.Name, ent.Patronymic);
+                if (fullName.Equals(value))
+                {
+                    entrants.Add(ent);
+                }
+
+            }
+
+            if (entrants.Count == 0)
+            {
+                MessageBox.Show(string.Format("Не найден ни один работник по критерию ({0}) не найден!", value), "Ошибка!");
+                return;
+            }
+
+            DataContext = entrants;
+
+
+
+        }
+
+
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
@@ -308,9 +347,45 @@ namespace selection_committee
             string currentSpeciality = specialityComboBox.SelectedItem.ToString() ?? "";
 
             DataContext = currentSpeciality == "Все специальности"
-                ? db.Entrants.Local.Where(el => el.Speciality == currentSpeciality)
-                : db.Entrants.Local.ToObservableCollection();
+                ? db.Entrants.Local.ToObservableCollection()
+                : db.Entrants.Local.Where(el => el.Speciality == currentSpeciality);
 
         }
+    void OnComboboxTextChanged(object sender, RoutedEventArgs e)
+    {
+        if (sender is ComboBox comboBox)
+        {
+            // Открытие выпадающего списка
+            comboBox.IsDropDownOpen = true;
+            comboBox.SelectedIndex = -1;
+                // Получение представления коллекции элементов комбобокса
+            var collectionView = CollectionViewSource.GetDefaultView(comboBox.Items);
+            if (collectionView != null)
+            {
+                // Фильтрация элементов коллекции
+                string searchText = comboBox.Text.Trim();
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    collectionView.Filter = item =>
+                        ((string)item).IndexOf(searchText, StringComparison.CurrentCultureIgnoreCase) >= 0;
+                }
+                else
+                {
+                    collectionView.Filter = null;
+                }
+            }
+        }
     }
+
+        private void MakeComboboxItems(ObservableCollection<Entrant> entrants)
+        {
+            findEntrantCB.Items.Clear();
+            foreach (Entrant entrant in entrants)
+            {
+                if (entrant is null) continue;
+                    findEntrantCB.Items.Add(entrant.Surname + " " + entrant.Name + " " + entrant.Patronymic);
+            }
+        }
+    }
+    
 }
